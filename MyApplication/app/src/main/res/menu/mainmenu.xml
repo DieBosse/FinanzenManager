@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/verdienstmenu"
+        android:title="Verdienst angeben"></item>
+    <item
+        android:id="@+id/kategorienmenu"
+        android:title="Kategorien verwalten"></item>
+</menu>

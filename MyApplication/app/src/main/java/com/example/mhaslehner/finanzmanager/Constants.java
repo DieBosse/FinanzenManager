@@ -43,7 +43,7 @@ public class Constants {
             " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             KATEGORIENAME + " TEXT NOT NULL, " +
             BESCHREIBUNG + " TEXT, " +
-            KATEGORIE_EINNAHMEN_CNT + " INTEGER, " +
-            KATEGORIE_AUSGABEN_CNT + " INTEGER); ";
+            KATEGORIE_EINNAHMEN_CNT + " INTEGER DEFAULT '0', " +
+            KATEGORIE_AUSGABEN_CNT + " INTEGER DEFAULT '0'); ";
 
 }

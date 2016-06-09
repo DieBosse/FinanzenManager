@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<EditTextPreference
+    android:id="@+id/verdienst"
+    android:key="verdienst"
+    android:title="Verdienst"
+    android:summary="Geben Sie den monatlichen Betrag an, den Sie zu verfügung haben."
+    ></EditTextPreference>
+</PreferenceScreen>
