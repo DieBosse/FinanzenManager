@@ -29,14 +29,14 @@ public class Constants {
             " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             BESCHREIBUNG + " TEXT NOT NULL , " +
             BETRAG + " DOUBLE NOT NULL , " +
-            DATUM + " DATE NOT NULL , " +
+            DATUM + " TEXT NOT NULL , " +
             KATEGORIE + " TEXT NOT NULL);";
 
     public static final String TBLSQL_E = "CREATE TABLE " + TBLNAME_E + " ( " + _ID +
             " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             BESCHREIBUNG + " TEXT NOT NULL , " +
             BETRAG + " DOUBLE NOT NULL , " +
-            DATUM + " DATE NOT NULL , " +
+            DATUM + " TEXT NOT NULL , " +
             KATEGORIE + " TEXT NOT NULL);";
 
     public static final String TBLSQL_K = "CREATE TABLE " + TBLNAME_K + " ( " + _ID +
