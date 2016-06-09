@@ -12,11 +12,18 @@ public class Constants {
     public static final int DBVERSION_E = 1;
     public static final String TBLNAME_E = "einnahmen";
 
-    static final String _ID = "_id";
-    static final String BESCHREIBUNG = "beschreibung";
-    static final String BETRAG = "betrag";
-    static final String DATUM = "datum";
-    static final String KATEGORIE = "kategorie";
+    public static final String DBNAME_K = "kategorien.db";
+    public static final int DBVERSION_K = 1;
+    public static final String TBLNAME_K = "kategorien";
+
+    public static final String _ID = "_id";
+    public static final String BESCHREIBUNG = "beschreibung";
+    public static final String BETRAG = "betrag";
+    public static final String DATUM = "datum";
+    public static final String KATEGORIE = "kategorie";
+    public static final String KATEGORIENAME = "name";
+    public static final String KATEGORIE_EINNAHMEN_CNT = "einnahmencnt";
+    public static final String KATEGORIE_AUSGABEN_CNT = "ausgabencnt";
 
     public static final String TBLSQL_A = "CREATE TABLE " + TBLNAME_A + " ( " + _ID +
             " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -31,4 +38,12 @@ public class Constants {
             BETRAG + " DOUBLE NOT NULL , " +
             DATUM + " DATE NOT NULL , " +
             KATEGORIE + " TEXT NOT NULL);";
+
+    public static final String TBLSQL_K = "CREATE TABLE " + TBLNAME_K + " ( " + _ID +
+            " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            KATEGORIENAME + " TEXT NOT NULL, " +
+            BESCHREIBUNG + " TEXT, " +
+            KATEGORIE_EINNAHMEN_CNT + " INTEGER, " +
+            KATEGORIE_AUSGABEN_CNT + " INTEGER); ";
+
 }
