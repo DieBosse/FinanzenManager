@@ -44,7 +44,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editTextBeschreibung" />
+                android:id="@+id/editTextBeschreibungE" />
         </LinearLayout>
 
         <LinearLayout
@@ -62,7 +62,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editTextBetrag" />
+                android:id="@+id/editTextBetragE" />
         </LinearLayout>
 
         <LinearLayout
@@ -80,7 +80,7 @@
             <DatePicker
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/datePicker2"
+                android:id="@+id/datePickerE"
                 android:calendarViewShown="false"
                 android:datePickerMode="spinner" />
 
@@ -90,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Übernehmen"
-            android:id="@+id/button5" />
+            android:id="@+id/buttonOkE" />
 
     </LinearLayout>
 </RelativeLayout>

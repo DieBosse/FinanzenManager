@@ -22,7 +22,6 @@ public class Constants {
     public static final String DATUM = "datum";
     public static final String KATEGORIE = "kategorie";
     public static final String KATEGORIENAME = "name";
-    public static final String KATEGORIE_EINNAHMEN_CNT = "einnahmencnt";
     public static final String KATEGORIE_AUSGABEN_CNT = "ausgabencnt";
 
     public static final String TBLSQL_A = "CREATE TABLE " + TBLNAME_A + " ( " + _ID +
@@ -36,14 +35,12 @@ public class Constants {
             " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             BESCHREIBUNG + " TEXT NOT NULL , " +
             BETRAG + " DOUBLE NOT NULL , " +
-            DATUM + " TEXT NOT NULL , " +
-            KATEGORIE + " TEXT NOT NULL);";
+            DATUM + " TEXT NOT NULL);";
 
     public static final String TBLSQL_K = "CREATE TABLE " + TBLNAME_K + " ( " + _ID +
             " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             KATEGORIENAME + " TEXT NOT NULL, " +
             BESCHREIBUNG + " TEXT, " +
-            KATEGORIE_EINNAHMEN_CNT + " INTEGER, " +
             KATEGORIE_AUSGABEN_CNT + " INTEGER); ";
 
 }
