@@ -78,17 +78,28 @@ public class KategorieVerwaltung extends AppCompatActivity {
         addbutoon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 ContentValues vals = new ContentValues();
                 String name = nameeditText.getText().toString();
                 String beschreibung = beschreibungeditText.getText().toString();
                 vals.put(Constants.KATEGORIENAME, name);
                 vals.put(Constants.BESCHREIBUNG, beschreibung);
-                long insertid = db.insert(Constants.TBLNAME_K, null, vals);
-                dialog.cancel();
-                if (insertid > 0) {
+                Cursor cursor = db.rawQuery("SELECT * FROM " + Constants.TBLNAME_K +
+                        " WHERE LOWER(" + Constants.KATEGORIENAME + ") = '" + name.toLowerCase() + "'", null);
+                if (!cursor.moveToFirst()) {
+                    long insertid = db.insert(Constants.TBLNAME_K, null, vals);
+                    dialog.cancel();
+                    if (insertid > 0) {
+                        Toast.makeText(getApplicationContext(), "Die Kategorie " +
+                                name + " wurde erfolgreich erstellt.", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    dialog.cancel();
                     Toast.makeText(getApplicationContext(), "Die Kategorie " +
-                            name + " wurde erfolgreich erstellt.", Toast.LENGTH_LONG).show();
+                            name + " exestiert bereits.", Toast.LENGTH_LONG).show();
+
                 }
+
             }
         });
         showKategories();
