@@ -1,8 +1,10 @@
 package com.example.mhaslehner.finanzmanager;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -36,6 +38,12 @@ public class AddAusgabe extends AppCompatActivity {
         datePicker = (DatePicker) findViewById(R.id.datePicker);
         spinnerKategorie = (Spinner) findViewById(R.id.spinnerKategorie);
         acceptButton = (Button) findViewById(R.id.buttonOk);
+        Cursor cursor = ausgabenDB.rawQuery("SELECT * FROM " + Constants.TBLNAME_K, null);
+        if (cursor.moveToFirst()) {
+            setSpinnerAdapter(cursor);
+        }
+
+
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,6 +51,16 @@ public class AddAusgabe extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void setSpinnerAdapter(Cursor cursor) {
+        final String[] COLUMS_TO_BE_BOUND = new String[]{Constants.KATEGORIENAME};
+        final int[] ITEMS_TO_BE_FILLED = new int[]{android.R.id.text1};
+        final SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1,
+                cursor,
+                COLUMS_TO_BE_BOUND,
+                ITEMS_TO_BE_FILLED, 0);
+        spinnerKategorie.setAdapter(adapter);
     }
 
     private void ausgabeInDatenbankSchreiben() {

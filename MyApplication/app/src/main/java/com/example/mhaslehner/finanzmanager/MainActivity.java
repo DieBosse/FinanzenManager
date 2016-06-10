@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.SharedPreferences;
+import android.widget.Spinner;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private static SQLiteDatabase kategorienDB;
     private static SharedPreferences prefs = null;
     private static SharedPreferences.OnSharedPreferenceChangeListener listener = null;
+
 
 
     @Override
