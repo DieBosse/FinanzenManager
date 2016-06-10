@@ -21,6 +21,7 @@ public class KategorieVerwaltung extends AppCompatActivity {
     private static ListView listkategorien = null;
     private static SQLiteDatabase db = null;
     Button addKategorieButton = null;
+    Button deleteKategorienButton = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,12 @@ public class KategorieVerwaltung extends AppCompatActivity {
         dataBaseHelperKategorien = new DataBaseHelperKategorien(this);
         db = dataBaseHelperKategorien.getWritableDatabase();
         addKategorieButton = (Button) findViewById(R.id.buttonAddKategorie);
+        deleteKategorienButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteKategorie();
+            }
+        });
         addKategorieButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +74,7 @@ public class KategorieVerwaltung extends AppCompatActivity {
         final EditText beschreibungeditText = (EditText) v.findViewById(R.id.editTextAddKategorieBeschreibung);
         Button addbutoon = (Button) v.findViewById(R.id.buttonAddKategorie);
         Button cancelbutton = (Button) v.findViewById(R.id.buttonCancelKategorie);
+        dialog.setTitle("Kategorie hinzufügen");
         dialog.show();
         cancelbutton.setOnClickListener(new View.OnClickListener() {
             @Override
