@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -187,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Toast.makeText(getApplicationContext(),"Ausgaben: "+ausgabenCounter+", Einnahmen: "+einnahmenCounter,Toast.LENGTH_LONG).show();
         restlichesGeld = (TextView) findViewById(R.id.textViewRestlichesGeld);
-        restlichesGeld.setText(verdienst-ausgabenCounter+einnahmenCounter+"");
+        restlichesGeld.setText("Restlicher Betrag: "+(verdienst-ausgabenCounter+einnahmenCounter));
 
 
 
