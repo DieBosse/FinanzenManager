@@ -1,6 +1,7 @@
 package com.example.mhaslehner.finanzmanager;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -91,13 +92,16 @@ public class AddAusgabe extends AppCompatActivity {
 
         if(beschreibung.equals("") || datum.equals("") || kategorie.equals(""))
         {
-            Toast.makeText(getApplicationContext(),beschreibung+", "+datum+", "+kategorie,Toast.LENGTH_LONG).show();
             Toast.makeText(getApplicationContext(),"Ein oder mehrere Felder leer!",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),beschreibung+", "+datum+", "+kategorie,Toast.LENGTH_LONG).show();
+
 
         }
         else
         {
-            ausgabenDB.insert(Constants.TBLNAME_A,null,values);
+            ausgabenDB.insert(Constants.TBLNAME_A, null, values);
+            Toast.makeText(getApplicationContext(),beschreibung+" wurde erfolgreich hinzugefügt.",Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this,MainActivity.class));
         }
 
     }

@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Restliches Geld:"
-                android:id="@+id/textView3" />
+                android:id="@+id/textViewRestlichesGeld" />
 
             <TextView
                 android:layout_width="wrap_content"

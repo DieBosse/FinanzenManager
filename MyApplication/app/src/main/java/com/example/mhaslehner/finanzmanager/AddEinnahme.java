@@ -1,6 +1,7 @@
 package com.example.mhaslehner.finanzmanager;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -59,6 +60,8 @@ public class AddEinnahme extends AppCompatActivity {
         else
         {
             einnahmenDB.insert(Constants.TBLNAME_E,null,values);
+            Toast.makeText(getApplicationContext(),beschreibung+" wurde erfolgreich hinzugefügt.",Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, MainActivity.class));
         }
     }
 }
