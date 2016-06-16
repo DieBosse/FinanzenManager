@@ -38,11 +38,6 @@
                 android:text="Restliches Geld:"
                 android:id="@+id/textViewRestlichesGeld" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewRestlichesGeldEdit"
-                android:layout_weight="2.57" />
         </LinearLayout>
 
         <ImageView
