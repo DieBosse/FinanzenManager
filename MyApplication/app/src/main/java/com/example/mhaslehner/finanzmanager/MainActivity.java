@@ -114,16 +114,23 @@ public class MainActivity extends AppCompatActivity {
 
     public void restlichesGeldAnzeigen()
     {
-        Toast.makeText(getApplicationContext(),"aktualisierung",Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),"aktualisierung",Toast.LENGTH_LONG).show();
         double ausgabenCounter=0;
         double einnahmenCounter=0;
-        String prefsString = prefs.getString("verdienst","");
-        double verdienst = Double.parseDouble(prefsString);
+        String prefsString = prefs.getString("verdienst", "");
+        double verdienst = 0;
+        if(!prefsString.equals(""))
+        {
+            verdienst = Double.parseDouble(prefsString);
+        }
+
 
 
         Cursor ausgaben = finanzenDB.query(Constants.TBLNAME_A, new String[]{Constants.BETRAG, Constants.DATUM}, null, null, null, null, Constants._ID);
+        //ausgaben.moveToFirst();
         while (ausgaben.moveToNext())
         {
+            //Toast.makeText(getApplicationContext(),"geht rein",Toast.LENGTH_SHORT).show();
             String datum = ausgaben.getString(1);
             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
             Date ausgabenDatum=null;
@@ -138,10 +145,11 @@ public class MainActivity extends AppCompatActivity {
             calendarAusgabe.setTime(ausgabenDatum);
             GregorianCalendar calendarAktuell = new GregorianCalendar();
             calendarAktuell.setTime(aktuellesDatum);
-            
 
-            if(ausgabenDatum.getMonth() == aktuellesDatum.getMonth() && ausgabenDatum.getYear() == aktuellesDatum.getYear())
+            //Toast.makeText(getApplicationContext(),calendarAktuell.get(Calendar.MONTH)+", "+calendarAusgabe.get(Calendar.MONTH),Toast.LENGTH_SHORT).show();
+            if(calendarAktuell.get(Calendar.MONTH) == (calendarAusgabe.get(Calendar.MONTH)+1) && calendarAktuell.get(Calendar.YEAR) == calendarAusgabe.get(Calendar.YEAR))
             {
+                Toast.makeText(getApplicationContext(),"geht in ausgaben rein",Toast.LENGTH_SHORT);
                 double betrag = ausgaben.getDouble(0);
                 ausgabenCounter+=betrag;
             }
@@ -149,8 +157,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Cursor einnahmen = finanzenDB.query(Constants.TBLNAME_E,new String[]{Constants.BETRAG,Constants.DATUM},null,null,null,null,Constants._ID);
+        //einnahmen.moveToFirst();
         while (einnahmen.moveToNext())
         {
+            //Toast.makeText(getApplicationContext(),"geht rein",Toast.LENGTH_SHORT).show();
             String datum = einnahmen.getString(1);
             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
             Date einnahmenDatum=null;
@@ -160,16 +170,22 @@ public class MainActivity extends AppCompatActivity {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            if(einnahmenDatum.getMonth() == aktuellesDatum.getMonth() && einnahmenDatum.getYear() == aktuellesDatum.getYear())
+            GregorianCalendar calendarEinnahme = new GregorianCalendar();
+            calendarEinnahme.setTime(einnahmenDatum);
+            GregorianCalendar calendarAktuell = new GregorianCalendar();
+            calendarAktuell.setTime(aktuellesDatum);
+            //Toast.makeText(getApplicationContext(),calendarAktuell.get(Calendar.MONTH)+", "+calendarEinnahme.get(Calendar.MONTH),Toast.LENGTH_SHORT).show();
+            if((calendarEinnahme.get(Calendar.MONTH)+1) == calendarAktuell.get(Calendar.MONTH) && calendarEinnahme.get(Calendar.YEAR) == calendarAktuell.get(Calendar.YEAR))
             {
-                double betrag = ausgaben.getDouble(0);
+                //Toast.makeText(getApplicationContext(),"geht in einnahmen rein",Toast.LENGTH_SHORT);
+                double betrag = einnahmen.getDouble(0);
                 einnahmenCounter+=betrag;
             }
 
         }
 
 
-        Toast.makeText(getApplicationContext(),"Ausgaben: "+ausgabenCounter+", Einnahmen: "+einnahmenCounter,Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),"Ausgaben: "+ausgabenCounter+", Einnahmen: "+einnahmenCounter,Toast.LENGTH_LONG).show();
         restlichesGeld = (TextView) findViewById(R.id.textViewRestlichesGeld);
         restlichesGeld.setText(verdienst-ausgabenCounter+einnahmenCounter+"");
 
