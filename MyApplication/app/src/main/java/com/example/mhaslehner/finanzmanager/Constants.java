@@ -5,15 +5,15 @@ package com.example.mhaslehner.finanzmanager;
  */
 public class Constants {
     public static final String DBNAME_A = "ausgaben.db";
-    public static final int DBVERSION_A = 1;
+    public static final int DBVERSION_A = 2;
     public static final String TBLNAME_A = "ausgaben";
 
     public static final String DBNAME_E = "einnahmen.db";
-    public static final int DBVERSION_E = 1;
+    public static final int DBVERSION_E = 2;
     public static final String TBLNAME_E = "einnahmen";
 
     public static final String DBNAME_K = "kategorien.db";
-    public static final int DBVERSION_K = 1;
+    public static final int DBVERSION_K = 3;
     public static final String TBLNAME_K = "kategorien";
 
     public static final String _ID = "_id";

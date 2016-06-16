@@ -75,27 +75,27 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void addAusgabe(View view) {
+    public void addAusgabe(final View view) {
         Intent i = new Intent(getApplicationContext(), AddAusgabe.class);
         startActivity(i);
     }
 
-    public void addEinnahme(View view) {
+    public void addEinnahme(final View view) {
         Intent i = new Intent(getApplicationContext(), AddEinnahme.class);
         startActivity(i);
     }
 
-    public void kategorieStatistik(View view) {
+    public void kategorieStatistik(final View view) {
         Intent i = new Intent(getApplicationContext(), KategorieStatistik.class);
         startActivity(i);
     }
 
-    public void wochenStatistik(View view) {
+    public void wochenStatistik(final View view) {
         Intent i = new Intent(getApplicationContext(), WochenStatistik.class);
         startActivity(i);
     }
 
-    public void verbesserungen(View view) {
+    public void verbesserungen(final View view) {
         Intent i = new Intent(getApplicationContext(), Verbesserungen.class);
         startActivity(i);
     }

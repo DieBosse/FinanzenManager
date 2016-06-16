@@ -32,6 +32,7 @@ public class KategorieVerwaltung extends AppCompatActivity {
         dataBaseHelperKategorien = new DataBaseHelperKategorien(this);
         db = dataBaseHelperKategorien.getWritableDatabase();
         addKategorieButton = (Button) findViewById(R.id.buttonAddKategorie);
+        deleteKategorienButton = (Button) findViewById(R.id.buttonDeleteKategorie);
         deleteKategorienButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,21 +93,25 @@ public class KategorieVerwaltung extends AppCompatActivity {
                 String beschreibung = beschreibungeditText.getText().toString();
                 vals.put(Constants.KATEGORIENAME, name);
                 vals.put(Constants.BESCHREIBUNG, beschreibung);
-                Cursor cursor = db.rawQuery("SELECT * FROM " + Constants.TBLNAME_K +
-                        " WHERE LOWER(" + Constants.KATEGORIENAME + ") = '" + name.toLowerCase() + "'", null);
-                if (!cursor.moveToFirst()) {
-                    long insertid = db.insert(Constants.TBLNAME_K, null, vals);
-                    dialog.cancel();
-                    if (insertid > 0) {
+                if (name != "")
+                {
+                    Cursor cursor = db.rawQuery("SELECT * FROM " + Constants.TBLNAME_K +
+                            " WHERE LOWER(" + Constants.KATEGORIENAME + ") = '" + name.toLowerCase() + "'", null);
+                    if (!cursor.moveToFirst()) {
+                        long insertid = db.insert(Constants.TBLNAME_K, null, vals);
+                        dialog.cancel();
+                        if (insertid > 0) {
+                            Toast.makeText(getApplicationContext(), "Die Kategorie " +
+                                    name + " wurde erfolgreich erstellt.", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        dialog.cancel();
                         Toast.makeText(getApplicationContext(), "Die Kategorie " +
-                                name + " wurde erfolgreich erstellt.", Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    dialog.cancel();
-                    Toast.makeText(getApplicationContext(), "Die Kategorie " +
-                            name + " exestiert bereits.", Toast.LENGTH_LONG).show();
+                                name + " exestiert bereits.", Toast.LENGTH_LONG).show();
 
+                    }
                 }
+
 
             }
         });
