@@ -24,6 +24,7 @@
         <activity android:name=".Verbesserungen"></activity>
         <activity android:name=".PreferenceActivity"></activity>
         <activity android:name=".KategorieVerwaltung"></activity>
+        <activity android:name=".KategorieDetails"></activity>
     </application>
 
 </manifest>

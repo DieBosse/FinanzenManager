@@ -25,13 +25,11 @@ public class MainActivity extends AppCompatActivity {
 
     ImageView img;
 
-    private static DataBaseHelperEinnahmen dataBaseHelperEinnahmen;
-    private static DataBaseHelperAusgaben dataBaseHelperAusgaben;
-    private static DataBaseHelperKategorien dataBaseHelperKategorien;
+    private static DataBaseOpenHelperFinanzen dataBaseOpenHelperFinanzen;
 
-    private static SQLiteDatabase einnahmenDB;
-    private static SQLiteDatabase ausgabenDB;
-    private static SQLiteDatabase kategorienDB;
+
+    private static SQLiteDatabase finanzenDB;
+
     private static SharedPreferences prefs = null;
     private static SharedPreferences.OnSharedPreferenceChangeListener listener = null;
     private static TextView restlichesGeld;
@@ -41,13 +39,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        dataBaseHelperEinnahmen = new DataBaseHelperEinnahmen(this);
-        dataBaseHelperAusgaben = new DataBaseHelperAusgaben(this);
-        dataBaseHelperKategorien = new DataBaseHelperKategorien(this);
+        dataBaseOpenHelperFinanzen = new DataBaseOpenHelperFinanzen(this);
+        finanzenDB = dataBaseOpenHelperFinanzen.getWritableDatabase();
 
-        einnahmenDB = dataBaseHelperEinnahmen.getReadableDatabase();
-        ausgabenDB = dataBaseHelperAusgaben.getReadableDatabase();
-        kategorienDB = dataBaseHelperKategorien.getReadableDatabase();
 
         img = (ImageView) findViewById(R.id.imageView);
         img.setImageResource(R.drawable.smiley_gruen);
@@ -125,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         double verdienst = Double.parseDouble(prefsString);
 
 
-        Cursor ausgaben = ausgabenDB.query(Constants.TBLNAME_A, new String[]{Constants.BETRAG, Constants.DATUM}, null, null, null, null, Constants._ID);
+        Cursor ausgaben = finanzenDB.query(Constants.TBLNAME_A, new String[]{Constants.BETRAG, Constants.DATUM}, null, null, null, null, Constants._ID);
         while (ausgaben.moveToNext())
         {
             String datum = ausgaben.getString(1);
@@ -152,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        Cursor einnahmen = einnahmenDB.query(Constants.TBLNAME_E,new String[]{Constants.BETRAG,Constants.DATUM},null,null,null,null,Constants._ID);
+        Cursor einnahmen = finanzenDB.query(Constants.TBLNAME_E,new String[]{Constants.BETRAG,Constants.DATUM},null,null,null,null,Constants._ID);
         while (einnahmen.moveToNext())
         {
             String datum = einnahmen.getString(1);
