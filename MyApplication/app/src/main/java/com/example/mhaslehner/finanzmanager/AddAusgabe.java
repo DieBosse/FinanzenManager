@@ -73,7 +73,13 @@ public class AddAusgabe extends AppCompatActivity {
         int month = datePicker.getMonth();
         int day = datePicker.getDayOfMonth();
         String datum=day+"."+month+"."+year;
-        String kategorie = (String) spinnerKategorie.getSelectedItem();
+        String kategorie = "";
+        int id = (int) spinnerKategorie.getSelectedItemId();
+        Cursor cursor = kategorienDB.query(Constants.TBLNAME_K,new String[]{Constants.KATEGORIENAME},"_id=?",new String[]{id+""},null,null,Constants._ID);
+        while (cursor.moveToNext())
+        {
+            kategorie = cursor.getString(0);
+        }
 
         ContentValues values = new ContentValues();
         values.put("beschreibung",beschreibung);
@@ -81,9 +87,13 @@ public class AddAusgabe extends AppCompatActivity {
         values.put("datum", datum);
         values.put("kategorie", kategorie);
 
-        if(beschreibung.equals("") || datum.equals("") || kategorie.equals("") || betrag != 0.0)
+
+
+        if(beschreibung.equals("") || datum.equals("") || kategorie.equals(""))
         {
+            Toast.makeText(getApplicationContext(),beschreibung+", "+datum+", "+kategorie,Toast.LENGTH_LONG).show();
             Toast.makeText(getApplicationContext(),"Ein oder mehrere Felder leer!",Toast.LENGTH_LONG).show();
+
         }
         else
         {

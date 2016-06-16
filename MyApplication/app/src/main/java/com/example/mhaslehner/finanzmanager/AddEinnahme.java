@@ -52,7 +52,7 @@ public class AddEinnahme extends AppCompatActivity {
         values.put("betrag",betrag);
         values.put("datum",datum);
 
-        if(beschreibung.equals("") || datum.equals("") ||  betrag != 0.0)
+        if(beschreibung.equals("") || datum.equals(""))
         {
             Toast.makeText(getApplicationContext(), "Ein oder mehrere Felder leer!", Toast.LENGTH_LONG).show();
         }
