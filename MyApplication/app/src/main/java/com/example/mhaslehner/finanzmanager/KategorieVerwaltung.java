@@ -4,12 +4,14 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -31,6 +33,31 @@ public class KategorieVerwaltung extends AppCompatActivity {
         setContentView(R.layout.activity_kategorie_verwaltung);
 
         listkategorien = (ListView) findViewById(R.id.listViewKategorien);
+        listkategorien.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (id > -1) {
+                    Cursor cursor = db.rawQuery("SELECT * FROM " + Constants.TBLNAME_K + " WHERE " +
+                            Constants._ID + " = " + id, null);
+                    if (cursor.moveToFirst()) {
+
+                        String name = cursor.getString(cursor.getColumnIndex(Constants.KATEGORIENAME));
+                        String beschreibung = cursor.getString(cursor.getColumnIndex(Constants.BESCHREIBUNG));
+                        if (!beschreibung.equals("")) {
+                            startActivity(new Intent(getApplicationContext(),
+                                    KategorieDetails.class).putExtra("nameKategorie", name).
+                                    putExtra("beschreibungKategorie", beschreibung));
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Keine Beschreibung bei " +
+                                    name + " vorhanden!", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+
+                }
+
+            }
+        });
         dataBaseHelperKategorien = new DataBaseHelperKategorien(this);
         db = dataBaseHelperKategorien.getWritableDatabase();
         addKategorieButton = (Button) findViewById(R.id.buttonAddKategorie);
@@ -133,7 +160,7 @@ public class KategorieVerwaltung extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         String name = editTextName.getText().toString();
                         db.delete(Constants.TBLNAME_K, "LOWER(" + Constants.KATEGORIENAME + ") = ?"
-                                ,new String[] {name.toLowerCase()});
+                                , new String[]{name.toLowerCase()});
                         Toast.makeText(getApplicationContext(), "Kategorie " + name +
                                 " wurde erfolgreich gelöscht!", Toast.LENGTH_LONG).show();
                         showKategories();
