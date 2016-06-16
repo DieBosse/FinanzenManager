@@ -26,19 +26,22 @@ public class AddAusgabe extends AppCompatActivity {
     private static Button acceptButton;
     DataBaseHelperAusgaben dataBaseHelperAusgaben;
     SQLiteDatabase ausgabenDB;
-
+    DataBaseHelperKategorien dataBaseHelperKategorien;
+    SQLiteDatabase kategorienDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_ausgabe);
         dataBaseHelperAusgaben = new DataBaseHelperAusgaben(this);
         ausgabenDB = dataBaseHelperAusgaben.getReadableDatabase();
+        dataBaseHelperKategorien = new DataBaseHelperKategorien(this);
+        kategorienDB = dataBaseHelperKategorien.getReadableDatabase();
         editTextBeschreibung = (EditText) findViewById(R.id.editTextBeschreibung);
         editTextBetrag = (EditText) findViewById(R.id.editTextBetrag);
         datePicker = (DatePicker) findViewById(R.id.datePicker);
         spinnerKategorie = (Spinner) findViewById(R.id.spinnerKategorie);
         acceptButton = (Button) findViewById(R.id.buttonOk);
-        Cursor cursor = ausgabenDB.rawQuery("SELECT * FROM " + Constants.TBLNAME_K, null);
+        Cursor cursor = kategorienDB.rawQuery("SELECT * FROM " + Constants.TBLNAME_K, null);
         if (cursor.moveToFirst()) {
             setSpinnerAdapter(cursor);
         }
