@@ -166,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
             calendarAktuell.setTime(aktuellesDatum);
 
             if ((calendarEinnahme.get(Calendar.MONTH) + 1) == calendarAktuell.get(Calendar.MONTH) && calendarEinnahme.get(Calendar.YEAR) == calendarAktuell.get(Calendar.YEAR)) {
-                //Toast.makeText(getApplicationContext(),"geht in einnahmen rein",Toast.LENGTH_SHORT);
                 double betrag = einnahmen.getDouble(0);
                 einnahmenCounter += betrag;
             }
