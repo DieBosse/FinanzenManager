@@ -1,7 +1,9 @@
 package com.example.mhaslehner.finanzmanager;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -93,8 +95,7 @@ public class KategorieVerwaltung extends AppCompatActivity {
                 String beschreibung = beschreibungeditText.getText().toString();
                 vals.put(Constants.KATEGORIENAME, name);
                 vals.put(Constants.BESCHREIBUNG, beschreibung);
-                if (name != "")
-                {
+                if (!name.equals("")) {
                     Cursor cursor = db.rawQuery("SELECT * FROM " + Constants.TBLNAME_K +
                             " WHERE LOWER(" + Constants.KATEGORIENAME + ") = '" + name.toLowerCase() + "'", null);
                     if (!cursor.moveToFirst()) {
@@ -104,22 +105,46 @@ public class KategorieVerwaltung extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Die Kategorie " +
                                     name + " wurde erfolgreich erstellt.", Toast.LENGTH_LONG).show();
                         }
+                        showKategories();
                     } else {
                         dialog.cancel();
                         Toast.makeText(getApplicationContext(), "Die Kategorie " +
                                 name + " exestiert bereits.", Toast.LENGTH_LONG).show();
 
                     }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Geben Sie einen Namen für die Kategorie ein!", Toast.LENGTH_LONG).show();
                 }
 
 
             }
         });
-        showKategories();
+
 
     }
 
-    public static void deleteKategorie() {
-
+    public void deleteKategorie() {
+        final EditText editTextName = new EditText(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Geben Sie den Namen der Kategorie ein, die Sie löschen wollen.").
+                setCancelable(true).setView(editTextName).
+                setPositiveButton("Löschen!", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String name = editTextName.getText().toString();
+                        db.delete(Constants.TBLNAME_K, "LOWER(" + Constants.KATEGORIENAME + ") = ?"
+                                ,new String[] {name.toLowerCase()});
+                        Toast.makeText(getApplicationContext(), "Kategorie " + name +
+                                " wurde erfolgreich gelöscht!", Toast.LENGTH_LONG).show();
+                        showKategories();
+                    }
+                }).setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
