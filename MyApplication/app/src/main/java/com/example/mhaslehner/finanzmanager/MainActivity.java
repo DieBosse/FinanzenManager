@@ -11,13 +11,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.SharedPreferences;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -81,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.verdienstmenu)
         {
             startActivity(new Intent(this, PreferenceActivity.class));
+        }
+        if( id == R.id.menuactivitys)
+        {
+            startActivity(new Intent(this, AktivitaetenAnzeigen.class));
         }
         return super.onOptionsItemSelected(item);
     }

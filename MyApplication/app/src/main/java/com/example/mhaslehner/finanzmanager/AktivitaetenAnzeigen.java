@@ -10,14 +10,14 @@ import android.widget.ListView;
 /**
  * Created by HP on 16.06.2016.
  */
-public class AktivitätenAnzeigen extends AppCompatActivity {
+public class AktivitaetenAnzeigen extends AppCompatActivity {
     private static DataBaseOpenHelperFinanzen dataBaseOpenHelperFinanzen;
-
 
 
     private static SQLiteDatabase finanzenDB;
 
     private static ListView listView;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aktivitaeten_anzeigen);
@@ -31,7 +31,10 @@ public class AktivitätenAnzeigen extends AppCompatActivity {
     }
 
     private void showActivitys() {
-        //setAdapter();
+        Cursor cursor = finanzenDB.rawQuery("SELECT * FROM " + Constants.TBLNAME_A +
+                " JOIN " + Constants.TBLNAME_E + " ON " + Constants._ID + " = " +
+                Constants._ID, null);
+        setAdapter(cursor);
     }
 
     private void setAdapter(Cursor cursor) {

@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ausgabe Hinzufügen"
-            android:id="@+id/textView5"
+            android:id="@+id/textViewAusgabenAdd"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -35,12 +35,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Beschreibung:"
-                android:id="@+id/textView6" />
+                android:id="@+id/textViewBeschreibungAusgaben" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editTextBeschreibung" />
+                android:id="@+id/editTextBeschreibungAusgaben" />
         </LinearLayout>
 
         <LinearLayout
@@ -52,12 +52,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Betrag"
-                android:id="@+id/textView7" />
+                android:id="@+id/textViewBetragAusgaben" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editTextBetrag" />
+                android:id="@+id/editTextBetragAusgaben" />
         </LinearLayout>
 
         <LinearLayout
@@ -69,12 +69,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Datum"
-                android:id="@+id/textView8" />
+                android:id="@+id/textViewDatumAusgaben" />
 
             <DatePicker
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/datePicker"
+                android:id="@+id/datePickerAusgaben"
                 android:calendarViewShown="false"
                 android:datePickerMode="spinner" />
 
@@ -89,12 +89,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Kategorie"
-                android:id="@+id/textView13" />
+                android:id="@+id/textViewKaegorieAusgaben" />
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="43dp"
-                android:id="@+id/spinnerKategorie"
+                android:id="@+id/spinnerKategorieAusgaben"
                 android:spinnerMode="dropdown" />
         </LinearLayout>
 
@@ -102,7 +102,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Übernehmen"
-            android:id="@+id/buttonOk" />
+            android:id="@+id/buttonOkAusgaben"
+            android:longClickable="true" />
 
     </LinearLayout>
 </RelativeLayout>

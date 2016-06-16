@@ -6,4 +6,7 @@
     <item
         android:id="@+id/kategorienmenu"
         android:title="Kategorien verwalten"></item>
+    <item
+        android:title="Ausgaben/Einnahmen anzeigen"
+        android:id="@+id/menuactivitys"></item>
 </menu>

@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 public class AddEinnahme extends AppCompatActivity {
@@ -42,26 +41,29 @@ public class AddEinnahme extends AppCompatActivity {
 
     private void einnahmeInDatenbankSchreiben() {
         String beschreibung = editTextBeschreibung.getText().toString();
-        Double betrag = Double.parseDouble(editTextBetrag.getText().toString());
+        Double betrag;
+        try {
+            betrag = Double.parseDouble(editTextBetrag.getText().toString());
+        } catch (NumberFormatException e) {
+            Toast.makeText(getApplication(), "Geben Sie einen gültigen Betrag ein!", Toast.LENGTH_LONG).show();
+            return;
+        }
         int year = datePicker.getYear();
         int month = datePicker.getMonth();
         int day = datePicker.getDayOfMonth();
-        String datum=day+"."+month+"."+year;
+        String datum = day + "." + month + "." + year;
 
         ContentValues values = new ContentValues();
-        values.put("beschreibung",beschreibung);
-        values.put("betrag",betrag);
-        values.put("datum",datum);
+        values.put("beschreibung", beschreibung);
+        values.put("betrag", betrag);
+        values.put("datum", datum);
 
-        if(beschreibung.equals("") || datum.equals(""))
-        {
+        if (beschreibung.equals("") || datum.equals("")) {
             Toast.makeText(getApplicationContext(), "Ein oder mehrere Felder leer!", Toast.LENGTH_LONG).show();
-        }
-        else
-        {
+        } else {
 
-            finanzenDB.insert(Constants.TBLNAME_E,null,values);
-            Toast.makeText(getApplicationContext(),beschreibung+" wurde erfolgreich hinzugefügt.",Toast.LENGTH_LONG).show();
+            finanzenDB.insert(Constants.TBLNAME_E, null, values);
+            Toast.makeText(getApplicationContext(), beschreibung + " wurde erfolgreich hinzugefügt.", Toast.LENGTH_LONG).show();
             startActivity(new Intent(this, MainActivity.class));
 
 

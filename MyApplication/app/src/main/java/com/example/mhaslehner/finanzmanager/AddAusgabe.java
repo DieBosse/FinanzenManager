@@ -14,10 +14,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class AddAusgabe extends AppCompatActivity {
 
     private static EditText editTextBeschreibung;
@@ -35,11 +31,11 @@ public class AddAusgabe extends AppCompatActivity {
         dataBaseHelperFinanzen = new DataBaseOpenHelperFinanzen(getApplicationContext());
         fianzenDB = dataBaseHelperFinanzen.getReadableDatabase();
 
-        editTextBeschreibung = (EditText) findViewById(R.id.editTextBeschreibung);
-        editTextBetrag = (EditText) findViewById(R.id.editTextBetrag);
-        datePicker = (DatePicker) findViewById(R.id.datePicker);
-        spinnerKategorie = (Spinner) findViewById(R.id.spinnerKategorie);
-        acceptButton = (Button) findViewById(R.id.buttonOk);
+        editTextBeschreibung = (EditText) findViewById(R.id.editTextBeschreibungAusgaben);
+        editTextBetrag = (EditText) findViewById(R.id.editTextBetragAusgaben);
+        datePicker = (DatePicker) findViewById(R.id.datePickerAusgaben);
+        spinnerKategorie = (Spinner) findViewById(R.id.spinnerKategorieAusgaben);
+        acceptButton = (Button) findViewById(R.id.buttonOkAusgaben);
         Cursor cursor = fianzenDB.rawQuery("SELECT * FROM " + Constants.TBLNAME_K, null);
         if (cursor.moveToFirst()) {
             setSpinnerAdapter(cursor);
@@ -67,7 +63,14 @@ public class AddAusgabe extends AppCompatActivity {
 
     private void ausgabeInDatenbankSchreiben() {
         String beschreibung = editTextBeschreibung.getText().toString();
-        Double betrag = Double.parseDouble(editTextBetrag.getText().toString());
+        Double betrag;
+        try {
+            betrag = Double.parseDouble(editTextBetrag.getText().toString());
+        } catch (NumberFormatException e) {
+            Toast.makeText(getApplication(), "Geben Sie einen gültigen Betrag ein!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         int year = datePicker.getYear();
         int month = datePicker.getMonth();
         int day = datePicker.getDayOfMonth();
@@ -92,10 +95,10 @@ public class AddAusgabe extends AppCompatActivity {
 
 
         } else {
+
             fianzenDB.insert(Constants.TBLNAME_A, null, values);
             Toast.makeText(getApplicationContext(), beschreibung + " wurde erfolgreich hinzugefügt.", Toast.LENGTH_LONG).show();
             startActivity(new Intent(this, MainActivity.class));
-
 
         }
 

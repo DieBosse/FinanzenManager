@@ -24,12 +24,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Restliche Tage:"
-                android:id="@+id/textView" />
+                android:id="@+id/textViewRestlicheTage" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView2"
+                android:id="@+id/textViewRestlicheTageEdit"
                 android:layout_weight="1.24" />
 
             <TextView
@@ -41,7 +41,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView4"
+                android:id="@+id/textViewRestlichesGeldEdit"
                 android:layout_weight="2.57" />
         </LinearLayout>
 
@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ausgabe Hinzufügen"
-            android:id="@+id/button"
+            android:id="@+id/buttonAusagebnAdd"
             android:layout_gravity="center_horizontal"
             android:onClick="addAusgabe" />
 
@@ -63,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Einnahme Hinzufügen"
-            android:id="@+id/button2"
+            android:id="@+id/buttonEinnahmenAdd"
             android:layout_gravity="center_horizontal"
             android:nestedScrollingEnabled="false"
             android:onClick="addEinnahme" />
@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Statistik Anzeigen"
-            android:id="@+id/button3"
+            android:id="@+id/buttonStatistiken"
             android:layout_gravity="center_horizontal"
             android:onClick="kategorieStatistik" />
 
@@ -80,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Verbesserungsvorschläge"
-            android:id="@+id/button4"
+            android:id="@+id/buttonVerbesserungen"
             android:layout_gravity="center_horizontal"
             android:onClick="verbesserungen" />
 
