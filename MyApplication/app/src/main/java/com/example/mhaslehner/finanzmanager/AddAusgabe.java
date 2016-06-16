@@ -24,24 +24,21 @@ public class AddAusgabe extends AppCompatActivity {
     private static DatePicker datePicker;
     private static Spinner spinnerKategorie;
     private static Button acceptButton;
-    DataBaseHelperAusgaben dataBaseHelperAusgaben;
-    SQLiteDatabase ausgabenDB;
-    DataBaseHelperKategorien dataBaseHelperKategorien;
-    SQLiteDatabase kategorienDB;
+    DataBaseOpenHelperFinanzen dataBaseHelperFinanzen;
+    SQLiteDatabase fianzenDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_ausgabe);
-        dataBaseHelperAusgaben = new DataBaseHelperAusgaben(this);
-        ausgabenDB = dataBaseHelperAusgaben.getReadableDatabase();
-        dataBaseHelperKategorien = new DataBaseHelperKategorien(this);
-        kategorienDB = dataBaseHelperKategorien.getReadableDatabase();
+        dataBaseHelperFinanzen = new DataBaseOpenHelperFinanzen(getApplicationContext());
+        fianzenDB = dataBaseHelperFinanzen.getReadableDatabase();
+
         editTextBeschreibung = (EditText) findViewById(R.id.editTextBeschreibung);
         editTextBetrag = (EditText) findViewById(R.id.editTextBetrag);
         datePicker = (DatePicker) findViewById(R.id.datePicker);
         spinnerKategorie = (Spinner) findViewById(R.id.spinnerKategorie);
         acceptButton = (Button) findViewById(R.id.buttonOk);
-        Cursor cursor = kategorienDB.rawQuery("SELECT * FROM " + Constants.TBLNAME_K, null);
+        Cursor cursor = fianzenDB.rawQuery("SELECT * FROM " + Constants.TBLNAME_K, null);
         if (cursor.moveToFirst()) {
             setSpinnerAdapter(cursor);
         }
@@ -75,7 +72,7 @@ public class AddAusgabe extends AppCompatActivity {
         String datum=day+"."+month+"."+year;
         String kategorie = "";
         int id = (int) spinnerKategorie.getSelectedItemId();
-        Cursor cursor = kategorienDB.query(Constants.TBLNAME_K,new String[]{Constants.KATEGORIENAME},"_id=?",new String[]{id+""},null,null,Constants._ID);
+        Cursor cursor = fianzenDB.query(Constants.TBLNAME_K,new String[]{Constants.KATEGORIENAME},"_id=?",new String[]{id+""},null,null,Constants._ID);
         while (cursor.moveToNext())
         {
             kategorie = cursor.getString(0);
@@ -97,7 +94,7 @@ public class AddAusgabe extends AppCompatActivity {
         }
         else
         {
-            ausgabenDB.insert(Constants.TBLNAME_A,null,values);
+            fianzenDB.insert(Constants.TBLNAME_A,null,values);
         }
 
     }

@@ -17,15 +17,15 @@ public class AddEinnahme extends AppCompatActivity {
     private static EditText editTextBetrag;
     private static DatePicker datePicker;
     private static Button acceptButton;
-    DataBaseHelperEinnahmen dataBaseHelperEinnahmen;
-    SQLiteDatabase einnahmenDB;
+    DataBaseOpenHelperFinanzen dataBaseOpenHelperFinanzen;
+    SQLiteDatabase finanzenDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_einnahme);
-        dataBaseHelperEinnahmen = new DataBaseHelperEinnahmen(this);
-        einnahmenDB = dataBaseHelperEinnahmen.getReadableDatabase();
+        dataBaseOpenHelperFinanzen = new DataBaseOpenHelperFinanzen(this);
+        finanzenDB = dataBaseOpenHelperFinanzen.getReadableDatabase();
         editTextBeschreibung = (EditText) findViewById(R.id.editTextBeschreibungE);
         editTextBetrag = (EditText) findViewById(R.id.editTextBetragE);
         datePicker = (DatePicker) findViewById(R.id.datePickerE);
@@ -58,7 +58,7 @@ public class AddEinnahme extends AppCompatActivity {
         }
         else
         {
-            einnahmenDB.insert(Constants.TBLNAME_E,null,values);
+            finanzenDB.insert(Constants.TBLNAME_E,null,values);
         }
     }
 }

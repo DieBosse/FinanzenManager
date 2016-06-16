@@ -8,11 +8,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by mhaslehner on 09.06.2016.
  */
+/*
 public class DataBaseHelperAusgaben extends SQLiteOpenHelper{
 
 
     public DataBaseHelperAusgaben(Context context) {
-        super(context, Constants.DBNAME_A, null, Constants.DBVERSION_A);
+       // super(context, Constants.DBNAME_A, null, Constants.DBVERSION_A);
     }
 
     @Override
@@ -26,3 +27,4 @@ public class DataBaseHelperAusgaben extends SQLiteOpenHelper{
         onCreate(db);
     }
 }
+*/

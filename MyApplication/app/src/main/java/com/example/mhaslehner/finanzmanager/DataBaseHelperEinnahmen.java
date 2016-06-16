@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by mhaslehner on 09.06.2016.
  */
+/*
 public class DataBaseHelperEinnahmen extends SQLiteOpenHelper{
 
 
@@ -24,4 +25,6 @@ public class DataBaseHelperEinnahmen extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE "+Constants.TBLNAME_E);
         onCreate(db);
     }
-}
+    }
+*/
+

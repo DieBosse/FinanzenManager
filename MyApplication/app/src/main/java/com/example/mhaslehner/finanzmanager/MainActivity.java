@@ -16,13 +16,11 @@ public class MainActivity extends AppCompatActivity {
 
     ImageView img;
 
-    private static DataBaseHelperEinnahmen dataBaseHelperEinnahmen;
-    private static DataBaseHelperAusgaben dataBaseHelperAusgaben;
-    private static DataBaseHelperKategorien dataBaseHelperKategorien;
+    private static DataBaseOpenHelperFinanzen dataBaseOpenHelperFinanzen;
 
-    private static SQLiteDatabase einnahmenDB;
-    private static SQLiteDatabase ausgabenDB;
-    private static SQLiteDatabase kategorienDB;
+
+    private static SQLiteDatabase finanzenDB;
+
     private static SharedPreferences prefs = null;
     private static SharedPreferences.OnSharedPreferenceChangeListener listener = null;
 
@@ -32,13 +30,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        dataBaseHelperEinnahmen = new DataBaseHelperEinnahmen(this);
-        dataBaseHelperAusgaben = new DataBaseHelperAusgaben(this);
-        dataBaseHelperKategorien = new DataBaseHelperKategorien(this);
+        dataBaseOpenHelperFinanzen = new DataBaseOpenHelperFinanzen(this);
+        finanzenDB = dataBaseOpenHelperFinanzen.getWritableDatabase();
 
-        einnahmenDB = dataBaseHelperEinnahmen.getReadableDatabase();
-        ausgabenDB = dataBaseHelperAusgaben.getReadableDatabase();
-        kategorienDB = dataBaseHelperKategorien.getReadableDatabase();
 
         img = (ImageView) findViewById(R.id.imageView);
         img.setImageResource(R.drawable.smiley_gruen);

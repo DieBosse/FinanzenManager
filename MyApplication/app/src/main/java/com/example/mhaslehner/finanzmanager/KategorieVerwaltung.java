@@ -21,7 +21,7 @@ import android.widget.Toast;
  * Created by HP on 09.06.2016.
  */
 public class KategorieVerwaltung extends AppCompatActivity {
-    private static DataBaseHelperKategorien dataBaseHelperKategorien;
+    private static DataBaseOpenHelperFinanzen dataBaseHelperKategorien;
     private static ListView listkategorien = null;
     private static SQLiteDatabase db = null;
     Button addKategorieButton = null;
@@ -58,7 +58,7 @@ public class KategorieVerwaltung extends AppCompatActivity {
 
             }
         });
-        dataBaseHelperKategorien = new DataBaseHelperKategorien(this);
+        dataBaseHelperKategorien = new DataBaseOpenHelperFinanzen(this);
         db = dataBaseHelperKategorien.getWritableDatabase();
         addKategorieButton = (Button) findViewById(R.id.buttonAddKategorie);
         deleteKategorienButton = (Button) findViewById(R.id.buttonDeleteKategorie);
