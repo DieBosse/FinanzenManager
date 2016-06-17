@@ -31,7 +31,9 @@ public class MainActivity extends AppCompatActivity {
 
     private static SharedPreferences prefs = null;
     private static SharedPreferences.OnSharedPreferenceChangeListener listener = null;
-    private static TextView restlichesGeld;
+
+    private static double restlicheTageDouble = 0;
+    private static double restlichesGeldDouble = 0;
 
 
     @Override
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         img = (ImageView) findViewById(R.id.imageView);
-        img.setImageResource(R.drawable.smiley_gruen);
+
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
@@ -54,6 +56,33 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         restlichesGeldAnzeigen();
+        setSmiley();
+    }
+
+    private void setSmiley() {
+        String prefsString = prefs.getString("verdienst", "");
+        double verdienst = 0;
+        if (!prefsString.equals("")) {
+            verdienst = Double.parseDouble(prefsString);
+        }
+
+        GregorianCalendar calendarAktuell = new GregorianCalendar();
+        Date aktuellesDatum = new Date();
+        calendarAktuell.setTime(aktuellesDatum);
+        int maxDays = calendarAktuell.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        double geldSoll = verdienst / maxDays;
+        double geldIst = restlichesGeldDouble / restlicheTageDouble;
+        double percent = (geldSoll / 100) * 15;
+        if (geldIst >= (geldSoll + percent)) {
+            img.setImageResource(R.drawable.smiley_gruen);
+        }
+        if (geldIst < (geldSoll + percent)) {
+            img.setImageResource(R.drawable.smiley_gelb);
+        }
+        if ((geldIst+percent) < geldSoll) {
+            img.setImageResource(R.drawable.smiley_rot);
+        }
 
     }
 
@@ -111,6 +140,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void restlichesGeldAnzeigen() {
+        TextView restlichesGeld;
+        TextView restlicheTage;
         double ausgabenCounter = 0;
         double einnahmenCounter = 0;
         String prefsString = prefs.getString("verdienst", "");
@@ -169,14 +200,16 @@ public class MainActivity extends AppCompatActivity {
                 double betrag = einnahmen.getDouble(0);
                 einnahmenCounter += betrag;
             }
-            TextView restlicheTage = (TextView) findViewById(R.id.textViewRestlicheTageEdit);
-            restlicheTage.setText(" " + (calendarAktuell.getActualMaximum(Calendar.DAY_OF_MONTH) - calendarAktuell.get(Calendar.DAY_OF_MONTH)));
+            restlicheTageDouble = (calendarAktuell.getActualMaximum(Calendar.DAY_OF_MONTH) - calendarAktuell.get(Calendar.DAY_OF_MONTH));
+            restlicheTage = (TextView) findViewById(R.id.textViewRestlicheTageEdit);
+            restlicheTage.setText(" " + restlicheTageDouble);
 
         }
+        restlichesGeldDouble = Math.round((verdienst - ausgabenCounter + einnahmenCounter) * 100.0) / 100.0;
 
         restlichesGeld = (TextView) findViewById(R.id.textViewRestlichesGeld);
-        restlichesGeld.setText("Restlicher Betrag: " + (verdienst - ausgabenCounter + einnahmenCounter));
-        
+        restlichesGeld.setText("Restlicher Betrag: " + restlichesGeldDouble + "€");
 
+        setSmiley();
     }
 }
