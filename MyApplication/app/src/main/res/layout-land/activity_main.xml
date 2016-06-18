@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.mhaslehner.finanzmanager.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@+id/linearLayout2"
+        android:layout_toRightOf="@+id/linearLayout2"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewRestlicheTage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Restliche Tage:"
+                    android:layout_weight="1"/>
+
+
+                <TextView
+                    android:id="@+id/textViewRestlichesGeld"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Restliches Geld:"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/buttonVerbesserungen"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:onClick="verbesserungen"
+                android:text="Verbesserungsvorschläge"
+                android:visibility="gone"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/buttonAusagebnAdd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:onClick="addAusgabe"
+                android:text="Ausgabe Hinzufügen"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/buttonEinnahmenAdd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false"
+                android:onClick="addEinnahme"
+                android:text="Einnahme Hinzufügen"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/buttonStatistiken"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:onClick="kategorieStatistik"
+                android:text="Statistik Anzeigen"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+</RelativeLayout>

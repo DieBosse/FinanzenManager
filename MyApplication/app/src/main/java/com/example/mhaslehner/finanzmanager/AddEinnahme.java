@@ -45,7 +45,8 @@ public class AddEinnahme extends AppCompatActivity {
         try {
             betrag = Double.parseDouble(editTextBetrag.getText().toString());
         } catch (NumberFormatException e) {
-            Toast.makeText(getApplication(), "Geben Sie einen gültigen Betrag ein!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplication(), "Geben Sie einen gültigen Betrag ein!",
+                    Toast.LENGTH_LONG).show();
             return;
         }
         int year = datePicker.getYear();
@@ -59,11 +60,13 @@ public class AddEinnahme extends AppCompatActivity {
         values.put("datum", datum);
 
         if (beschreibung.equals("") || datum.equals("")) {
-            Toast.makeText(getApplicationContext(), "Ein oder mehrere Felder leer!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Ein oder mehrere Felder leer!",
+                    Toast.LENGTH_LONG).show();
         } else {
 
             finanzenDB.insert(Constants.TBLNAME_E, null, values);
-            Toast.makeText(getApplicationContext(), beschreibung + " wurde erfolgreich hinzugefügt.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), beschreibung +
+                    " wurde erfolgreich zu Einnahmen hinzugefügt.", Toast.LENGTH_LONG).show();
             startActivity(new Intent(this, MainActivity.class));
 
 

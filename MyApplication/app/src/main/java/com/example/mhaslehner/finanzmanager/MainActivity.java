@@ -53,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
                 if (key.equals("verdienst")) {
                     restlichesGeldAnzeigen();
                 }
+                if (key.equals("percentPrefs")) {
+                    setSmiley();
+                }
             }
         };
         restlichesGeldAnzeigen();
@@ -63,7 +66,13 @@ public class MainActivity extends AppCompatActivity {
         String prefsString = prefs.getString("verdienst", "");
         double verdienst = 0;
         if (!prefsString.equals("")) {
-            verdienst = Double.parseDouble(prefsString);
+            try {
+                verdienst = Double.parseDouble(prefsString);
+            } catch (NumberFormatException e) {
+                Toast.makeText(getApplicationContext(), "Keine gültiger Verdienst!"
+                        , Toast.LENGTH_LONG).show();
+            }
+
         }
 
         GregorianCalendar calendarAktuell = new GregorianCalendar();
@@ -73,14 +82,26 @@ public class MainActivity extends AppCompatActivity {
 
         double geldSoll = verdienst / maxDays;
         double geldIst = restlichesGeldDouble / restlicheTageDouble;
-        double percent = (geldSoll / 100) * 15;
-        if (geldIst >= (geldSoll + percent)) {
+        String prefsStringPercent = prefs.getString("percentPrefs", "15");
+
+        double percentPrefs = 0;
+        try {
+            percentPrefs = Double.parseDouble(prefsStringPercent);
+        } catch (NumberFormatException e) {
+            Toast.makeText(getApplicationContext(), "Keine gültigen Prozent!",
+                    Toast.LENGTH_LONG).show();
+            percentPrefs = 15;
+        }
+
+
+        double percent = (geldSoll / 100) * percentPrefs;
+        if (geldIst >= (geldSoll - percent)) {
             img.setImageResource(R.drawable.smiley_gruen);
         }
-        if (geldIst < (geldSoll + percent)) {
+        if (geldIst < (geldSoll - percent) && geldIst > (geldSoll - (3 * percent))) {
             img.setImageResource(R.drawable.smiley_gelb);
         }
-        if ((geldIst+percent) < geldSoll) {
+        if (geldIst < (geldSoll - (3 * percent))) {
             img.setImageResource(R.drawable.smiley_rot);
         }
 
@@ -144,14 +165,24 @@ public class MainActivity extends AppCompatActivity {
         TextView restlicheTage;
         double ausgabenCounter = 0;
         double einnahmenCounter = 0;
+        Date aktuellesDatum = new Date();
+        GregorianCalendar calendarAktuell = new GregorianCalendar();
+        calendarAktuell.setTime(aktuellesDatum);
         String prefsString = prefs.getString("verdienst", "");
         double verdienst = 0;
         if (!prefsString.equals("")) {
-            verdienst = Double.parseDouble(prefsString);
+            try {
+                verdienst = Double.parseDouble(prefsString);
+            } catch (NumberFormatException e) {
+                Toast.makeText(getApplicationContext(), "Keine gültiger Verdienst!"
+                        , Toast.LENGTH_LONG).show();
+            }
+
         }
 
 
-        Cursor ausgaben = finanzenDB.query(Constants.TBLNAME_A, new String[]{Constants.BETRAG, Constants.DATUM}, null, null, null, null, Constants._ID);
+        Cursor ausgaben = finanzenDB.query(Constants.TBLNAME_A,
+                new String[]{Constants.BETRAG, Constants.DATUM}, null, null, null, null, Constants._ID);
 
         while (ausgaben.moveToNext()) {
 
@@ -159,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
             Date ausgabenDatum = null;
 
-            Date aktuellesDatum = new Date();
+
             try {
                 ausgabenDatum = sdf.parse(datum);
             } catch (ParseException e) {
@@ -167,10 +198,10 @@ public class MainActivity extends AppCompatActivity {
             }
             GregorianCalendar calendarAusgabe = new GregorianCalendar();
             calendarAusgabe.setTime(ausgabenDatum);
-            GregorianCalendar calendarAktuell = new GregorianCalendar();
-            calendarAktuell.setTime(aktuellesDatum);
 
-            if (calendarAktuell.get(Calendar.MONTH) == (calendarAusgabe.get(Calendar.MONTH) + 1) && calendarAktuell.get(Calendar.YEAR) == calendarAusgabe.get(Calendar.YEAR)) {
+
+            if (calendarAktuell.get(Calendar.MONTH) == (calendarAusgabe.get(Calendar.MONTH) + 1)
+                    && calendarAktuell.get(Calendar.YEAR) == calendarAusgabe.get(Calendar.YEAR)) {
                 Toast.makeText(getApplicationContext(), "geht in ausgaben rein", Toast.LENGTH_SHORT);
                 double betrag = ausgaben.getDouble(0);
                 ausgabenCounter += betrag;
@@ -178,14 +209,14 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        Cursor einnahmen = finanzenDB.query(Constants.TBLNAME_E, new String[]{Constants.BETRAG, Constants.DATUM}, null, null, null, null, Constants._ID);
+        Cursor einnahmen = finanzenDB.query(Constants.TBLNAME_E,
+                new String[]{Constants.BETRAG, Constants.DATUM}, null, null, null, null, Constants._ID);
 
         while (einnahmen.moveToNext()) {
 
             String datum = einnahmen.getString(1);
             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
             Date einnahmenDatum = null;
-            Date aktuellesDatum = new Date();
             try {
                 einnahmenDatum = sdf.parse(datum);
             } catch (ParseException e) {
@@ -193,18 +224,17 @@ public class MainActivity extends AppCompatActivity {
             }
             GregorianCalendar calendarEinnahme = new GregorianCalendar();
             calendarEinnahme.setTime(einnahmenDatum);
-            GregorianCalendar calendarAktuell = new GregorianCalendar();
-            calendarAktuell.setTime(aktuellesDatum);
 
-            if ((calendarEinnahme.get(Calendar.MONTH) + 1) == calendarAktuell.get(Calendar.MONTH) && calendarEinnahme.get(Calendar.YEAR) == calendarAktuell.get(Calendar.YEAR)) {
+            if ((calendarEinnahme.get(Calendar.MONTH) + 1) == calendarAktuell.get(Calendar.MONTH)
+                    && calendarEinnahme.get(Calendar.YEAR) == calendarAktuell.get(Calendar.YEAR)) {
                 double betrag = einnahmen.getDouble(0);
                 einnahmenCounter += betrag;
             }
-            restlicheTageDouble = (calendarAktuell.getActualMaximum(Calendar.DAY_OF_MONTH) - calendarAktuell.get(Calendar.DAY_OF_MONTH));
-            restlicheTage = (TextView) findViewById(R.id.textViewRestlicheTageEdit);
-            restlicheTage.setText(" " + restlicheTageDouble);
-
         }
+        restlicheTageDouble = (calendarAktuell.getActualMaximum(Calendar.DAY_OF_MONTH)
+                - calendarAktuell.get(Calendar.DAY_OF_MONTH));
+        restlicheTage = (TextView) findViewById(R.id.textViewRestlicheTage);
+        restlicheTage.setText("Restliche Tage: " + (int) restlicheTageDouble);
         restlichesGeldDouble = Math.round((verdienst - ausgabenCounter + einnahmenCounter) * 100.0) / 100.0;
 
         restlichesGeld = (TextView) findViewById(R.id.textViewRestlichesGeld);

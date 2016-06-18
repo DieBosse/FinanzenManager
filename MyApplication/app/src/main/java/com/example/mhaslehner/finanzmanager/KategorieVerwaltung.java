@@ -124,7 +124,8 @@ public class KategorieVerwaltung extends AppCompatActivity {
                 vals.put(Constants.BESCHREIBUNG, beschreibung);
                 if (!name.equals("")) {
                     Cursor cursor = db.rawQuery("SELECT * FROM " + Constants.TBLNAME_K +
-                            " WHERE LOWER(" + Constants.KATEGORIENAME + ") = '" + name.toLowerCase() + "'", null);
+                            " WHERE LOWER(" + Constants.KATEGORIENAME + ") = '" + name.toLowerCase()
+                            + "'", null);
                     if (!cursor.moveToFirst()) {
                         long insertid = db.insert(Constants.TBLNAME_K, null, vals);
                         dialog.cancel();
@@ -140,7 +141,8 @@ public class KategorieVerwaltung extends AppCompatActivity {
 
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Geben Sie einen Namen für die Kategorie ein!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),
+                            "Geben Sie einen Namen für die Kategorie ein!", Toast.LENGTH_LONG).show();
                 }
 
 
@@ -159,11 +161,18 @@ public class KategorieVerwaltung extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String name = editTextName.getText().toString();
-                        db.delete(Constants.TBLNAME_K, "LOWER(" + Constants.KATEGORIENAME + ") = ?"
+                        int deleted = db.delete(Constants.TBLNAME_K,
+                                "LOWER(" + Constants.KATEGORIENAME + ") = ?"
                                 , new String[]{name.toLowerCase()});
-                        Toast.makeText(getApplicationContext(), "Kategorie " + name +
-                                " wurde erfolgreich gelöscht!", Toast.LENGTH_LONG).show();
-                        showKategories();
+                        if (deleted > 0) {
+                            Toast.makeText(getApplicationContext(), "Kategorie " + name +
+                                    " wurde erfolgreich gelöscht!", Toast.LENGTH_LONG).show();
+                            showKategories();
+                        } else {
+                            Toast.makeText(getApplicationContext(),
+                                    "Es existiert keine Kategorie mit dem Namen " +
+                                            name, Toast.LENGTH_LONG).show();
+                        }
                     }
                 }).setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
             @Override

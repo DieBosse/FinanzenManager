@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/verdienstmenu"
-        android:title="Verdienst angeben"></item>
+        android:title="Verdienst/Abweichung angeben"></item>
     <item
         android:id="@+id/kategorienmenu"
         android:title="Kategorien verwalten"></item>

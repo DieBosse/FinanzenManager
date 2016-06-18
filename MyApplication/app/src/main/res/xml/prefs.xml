@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-<EditTextPreference
-    android:id="@+id/verdienst"
-    android:key="verdienst"
-    android:title="Verdienst"
-    android:summary="Geben Sie den monatlichen Betrag an, den Sie zu verfügung haben."
-    ></EditTextPreference>
+    <EditTextPreference
+        android:id="@+id/verdienst"
+        android:key="verdienst"
+        android:summary="Geben Sie den monatlichen Betrag an, den Sie zu verfügung haben."
+        android:title="Verdienst"></EditTextPreference>
+    <EditTextPreference
+        android:id="@+id/percentPrefs"
+        android:key="percentPrefs"
+        android:summary="Geben Sie die Toleranzgrenze für den
+        restlichen Betrag in Abhängigkeit zu den restlichen Tagen an (in %).\nEmpfohlen: je kleiner der Verdienst, desto niedriger die Abweichung."
+        android:title="Abweichung"
+        android:defaultValue="15"></EditTextPreference>
 </PreferenceScreen>

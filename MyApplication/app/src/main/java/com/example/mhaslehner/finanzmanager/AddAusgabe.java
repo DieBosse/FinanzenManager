@@ -54,7 +54,8 @@ public class AddAusgabe extends AppCompatActivity {
     private void setSpinnerAdapter(Cursor cursor) {
         final String[] COLUMS_TO_BE_BOUND = new String[]{Constants.KATEGORIENAME};
         final int[] ITEMS_TO_BE_FILLED = new int[]{android.R.id.text1};
-        final SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1,
+        final SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
+                android.R.layout.simple_list_item_1,
                 cursor,
                 COLUMS_TO_BE_BOUND,
                 ITEMS_TO_BE_FILLED, 0);
@@ -67,7 +68,8 @@ public class AddAusgabe extends AppCompatActivity {
         try {
             betrag = Double.parseDouble(editTextBetrag.getText().toString());
         } catch (NumberFormatException e) {
-            Toast.makeText(getApplication(), "Geben Sie einen gültigen Betrag ein!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplication(), "Geben Sie einen gültigen Betrag ein!",
+                    Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -77,7 +79,8 @@ public class AddAusgabe extends AppCompatActivity {
         String datum = day + "." + month + "." + year;
         String kategorie = "";
         int id = (int) spinnerKategorie.getSelectedItemId();
-        Cursor cursor = fianzenDB.query(Constants.TBLNAME_K, new String[]{Constants.KATEGORIENAME}, "_id=?", new String[]{id + ""}, null, null, Constants._ID);
+        Cursor cursor = fianzenDB.query(Constants.TBLNAME_K, new String[]{Constants.KATEGORIENAME},
+                "_id=?", new String[]{id + ""}, null, null, Constants._ID);
         while (cursor.moveToNext()) {
             kategorie = cursor.getString(0);
         }
@@ -90,14 +93,17 @@ public class AddAusgabe extends AppCompatActivity {
 
 
         if (beschreibung.equals("") || datum.equals("") || kategorie.equals("")) {
-            Toast.makeText(getApplicationContext(), "Ein oder mehrere Felder leer!", Toast.LENGTH_LONG).show();
-            Toast.makeText(getApplicationContext(), beschreibung + ", " + datum + ", " + kategorie, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Ein oder mehrere Felder leer!",
+                    Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), beschreibung + ", " + datum + ", "
+                    + kategorie, Toast.LENGTH_LONG).show();
 
 
         } else {
 
             fianzenDB.insert(Constants.TBLNAME_A, null, values);
-            Toast.makeText(getApplicationContext(), beschreibung + " wurde erfolgreich hinzugefügt.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), beschreibung +
+                    " wurde erfolgreich zu Ausgaben hinzugefügt.", Toast.LENGTH_LONG).show();
             startActivity(new Intent(this, MainActivity.class));
 
         }

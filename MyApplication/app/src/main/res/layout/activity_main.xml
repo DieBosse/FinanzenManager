@@ -24,19 +24,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Restliche Tage:"
-                android:id="@+id/textViewRestlicheTage" />
+                android:id="@+id/textViewRestlicheTage"
+                android:layout_weight="1"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewRestlicheTageEdit"
-                android:layout_weight="1.24" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Restliches Geld:"
-                android:id="@+id/textViewRestlichesGeld" />
+                android:id="@+id/textViewRestlichesGeld"
+                android:layout_weight="1"/>
 
         </LinearLayout>
 
@@ -77,7 +74,8 @@
             android:text="Verbesserungsvorschläge"
             android:id="@+id/buttonVerbesserungen"
             android:layout_gravity="center_horizontal"
-            android:onClick="verbesserungen" />
+            android:onClick="verbesserungen"
+            android:visibility="gone" />
 
     </LinearLayout>
 
