@@ -22,21 +22,21 @@ public class AddAusgabe extends AppCompatActivity {
     private static Spinner spinnerKategorie;
     private static Button acceptButton;
     DataBaseOpenHelperFinanzen dataBaseHelperFinanzen;
-    SQLiteDatabase fianzenDB;
+    SQLiteDatabase finanzenDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_ausgabe);
         dataBaseHelperFinanzen = new DataBaseOpenHelperFinanzen(getApplicationContext());
-        fianzenDB = dataBaseHelperFinanzen.getReadableDatabase();
+        finanzenDB = dataBaseHelperFinanzen.getReadableDatabase();
 
         editTextBeschreibung = (EditText) findViewById(R.id.editTextBeschreibungAusgaben);
         editTextBetrag = (EditText) findViewById(R.id.editTextBetragAusgaben);
         datePicker = (DatePicker) findViewById(R.id.datePickerAusgaben);
         spinnerKategorie = (Spinner) findViewById(R.id.spinnerKategorieAusgaben);
         acceptButton = (Button) findViewById(R.id.buttonOkAusgaben);
-        Cursor cursor = fianzenDB.rawQuery("SELECT * FROM " + Constants.TBLNAME_K, null);
+        Cursor cursor = finanzenDB.rawQuery("SELECT * FROM " + Constants.TBLNAME_K, null);
         if (cursor.moveToFirst()) {
             setSpinnerAdapter(cursor);
         }
@@ -79,7 +79,7 @@ public class AddAusgabe extends AppCompatActivity {
         String datum = day + "." + month + "." + year;
         String kategorie = "";
         int id = (int) spinnerKategorie.getSelectedItemId();
-        Cursor cursor = fianzenDB.query(Constants.TBLNAME_K, new String[]{Constants.KATEGORIENAME},
+        Cursor cursor = finanzenDB.query(Constants.TBLNAME_K, new String[]{Constants.KATEGORIENAME},
                 "_id=?", new String[]{id + ""}, null, null, Constants._ID);
         while (cursor.moveToNext()) {
             kategorie = cursor.getString(0);
@@ -94,16 +94,24 @@ public class AddAusgabe extends AppCompatActivity {
 
         if (beschreibung.equals("") || datum.equals("") || kategorie.equals("")) {
             Toast.makeText(getApplicationContext(), "Ein oder mehrere Felder leer!",
-                    Toast.LENGTH_LONG).show();
+                    Toast.LENGTH_SHORT).show();
             Toast.makeText(getApplicationContext(), beschreibung + ", " + datum + ", "
-                    + kategorie, Toast.LENGTH_LONG).show();
+                    + kategorie, Toast.LENGTH_SHORT).show();
 
 
         } else {
 
-            fianzenDB.insert(Constants.TBLNAME_A, null, values);
-            Toast.makeText(getApplicationContext(), beschreibung +
-                    " wurde erfolgreich zu Ausgaben hinzugefügt.", Toast.LENGTH_LONG).show();
+            long insered = finanzenDB.insert(Constants.TBLNAME_A, null, values);
+            if (insered > 0) {
+                Cursor c = finanzenDB.rawQuery("UPDATE " + Constants.TBLNAME_K +
+                        " SET " + Constants.KATEGORIE_AUSGABEN_CNT +
+                        " = " + Constants.KATEGORIE_AUSGABEN_CNT + "+1 WHERE " +
+                        Constants.KATEGORIENAME + " = '" + kategorie + "'", null);
+                c.moveToFirst();
+                c.close();
+                Toast.makeText(getApplicationContext(), beschreibung +
+                        " wurde erfolgreich zu Ausgaben hinzugefügt.", Toast.LENGTH_SHORT).show();
+            }
             startActivity(new Intent(this, MainActivity.class));
 
         }

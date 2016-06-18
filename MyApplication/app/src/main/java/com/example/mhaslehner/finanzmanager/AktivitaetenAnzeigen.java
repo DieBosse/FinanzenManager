@@ -32,16 +32,16 @@ public class AktivitaetenAnzeigen extends AppCompatActivity {
 
     private void showActivitys() {
         Cursor cursor = finanzenDB.rawQuery("SELECT * FROM " + Constants.TBLNAME_A +
-                " JOIN " + Constants.TBLNAME_E + " ON " + Constants._ID + " = " +
+                " a LEFT OUTER JOIN " + Constants.TBLNAME_E + " b ON a." + Constants._ID + " = b." +
                 Constants._ID, null);
         setAdapter(cursor);
     }
 
     private void setAdapter(Cursor cursor) {
-        final String[] COLUMS_TO_BE_BOUND = new String[]{Constants.BESCHREIBUNG};
-        final int[] ITEMS_TO_BE_FILLED = new int[]{android.R.id.text1};
+        final String[] COLUMS_TO_BE_BOUND = new String[]{Constants.BESCHREIBUNG, Constants.BETRAG};
+        final int[] ITEMS_TO_BE_FILLED = new int[]{android.R.id.text1, android.R.id.text2};
         final SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-                android.R.layout.simple_list_item_1,
+                android.R.layout.two_line_list_item,
                 cursor,
                 COLUMS_TO_BE_BOUND,
                 ITEMS_TO_BE_FILLED, 0);

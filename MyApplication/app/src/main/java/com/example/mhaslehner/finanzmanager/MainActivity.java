@@ -42,11 +42,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         dataBaseOpenHelperFinanzen = new DataBaseOpenHelperFinanzen(this);
         finanzenDB = dataBaseOpenHelperFinanzen.getWritableDatabase();
-
-
         img = (ImageView) findViewById(R.id.imageView);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        restlichesGeldAnzeigen();
         listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -58,8 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-        restlichesGeldAnzeigen();
-        setSmiley();
+
     }
 
     private void setSmiley() {
@@ -70,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 verdienst = Double.parseDouble(prefsString);
             } catch (NumberFormatException e) {
                 Toast.makeText(getApplicationContext(), "Keine gültiger Verdienst!"
-                        , Toast.LENGTH_LONG).show();
+                        , Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -89,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             percentPrefs = Double.parseDouble(prefsStringPercent);
         } catch (NumberFormatException e) {
             Toast.makeText(getApplicationContext(), "Keine gültigen Prozent!",
-                    Toast.LENGTH_LONG).show();
+                    Toast.LENGTH_SHORT).show();
             percentPrefs = 15;
         }
 
@@ -97,12 +95,18 @@ public class MainActivity extends AppCompatActivity {
         double percent = (geldSoll / 100) * percentPrefs;
         if (geldIst >= (geldSoll - percent)) {
             img.setImageResource(R.drawable.smiley_gruen);
+            Toast.makeText(getApplicationContext(), "Ihre Finanzen sind gut!",
+                    Toast.LENGTH_SHORT).show();
         }
         if (geldIst < (geldSoll - percent) && geldIst > (geldSoll - (3 * percent))) {
             img.setImageResource(R.drawable.smiley_gelb);
+            Toast.makeText(getApplicationContext(), "Ihre Finanzen sind mittelmäßig!",
+                    Toast.LENGTH_SHORT).show();
         }
         if (geldIst < (geldSoll - (3 * percent))) {
             img.setImageResource(R.drawable.smiley_rot);
+            Toast.makeText(getApplicationContext(), "Ihre Finanzen sind schlecht, sparen Sie!",
+                    Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -175,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
                 verdienst = Double.parseDouble(prefsString);
             } catch (NumberFormatException e) {
                 Toast.makeText(getApplicationContext(), "Keine gültiger Verdienst!"
-                        , Toast.LENGTH_LONG).show();
+                        , Toast.LENGTH_SHORT).show();
             }
 
         }
