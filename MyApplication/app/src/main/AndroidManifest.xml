@@ -19,13 +19,11 @@
         </activity>
         <activity android:name=".AddAusgabe" />
         <activity android:name=".AddEinnahme" />
-        <activity android:name=".KategorieStatistik" />
-        <activity android:name=".WochenStatistik" />
-        <activity android:name=".Verbesserungen"></activity>
         <activity android:name=".PreferenceActivity"></activity>
         <activity android:name=".KategorieVerwaltung"></activity>
         <activity android:name=".KategorieDetails"></activity>
         <activity android:name=".AktivitaetenAnzeigen"></activity>
+        <activity android:name=".Statistik"></activity>
     </application>
 
 </manifest>

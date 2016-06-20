@@ -25,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
     ImageView img;
 
     private static DataBaseOpenHelperFinanzen dataBaseOpenHelperFinanzen;
-
-
     private static SQLiteDatabase finanzenDB;
 
     private static SharedPreferences prefs = null;
@@ -153,20 +151,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void kategorieStatistik(final View view) {
-        Intent i = new Intent(getApplicationContext(), KategorieStatistik.class);
+    public void Statistik(final View view) {
+        Intent i = new Intent(getApplicationContext(), Statistik.class);
         startActivity(i);
     }
 
-    public void wochenStatistik(final View view) {
-        Intent i = new Intent(getApplicationContext(), WochenStatistik.class);
-        startActivity(i);
-    }
 
-    public void verbesserungen(final View view) {
-        Intent i = new Intent(getApplicationContext(), Verbesserungen.class);
-        startActivity(i);
-    }
 
     public void restlichesGeldAnzeigen() {
         TextView restlichesGeld;
@@ -208,9 +198,8 @@ public class MainActivity extends AppCompatActivity {
             calendarAusgabe.setTime(ausgabenDatum);
 
 
-            if (calendarAktuell.get(Calendar.MONTH) == (calendarAusgabe.get(Calendar.MONTH) + 1)
+            if ((calendarAktuell.get(Calendar.MONTH)+1) == (calendarAusgabe.get(Calendar.MONTH) + 1)
                     && calendarAktuell.get(Calendar.YEAR) == calendarAusgabe.get(Calendar.YEAR)) {
-                Toast.makeText(getApplicationContext(), "geht in ausgaben rein", Toast.LENGTH_SHORT);
                 double betrag = ausgaben.getDouble(0);
                 ausgabenCounter += betrag;
             }
@@ -233,14 +222,14 @@ public class MainActivity extends AppCompatActivity {
             GregorianCalendar calendarEinnahme = new GregorianCalendar();
             calendarEinnahme.setTime(einnahmenDatum);
 
-            if ((calendarEinnahme.get(Calendar.MONTH) + 1) == calendarAktuell.get(Calendar.MONTH)
+            if ((calendarEinnahme.get(Calendar.MONTH) + 1) == (calendarAktuell.get(Calendar.MONTH)+1)
                     && calendarEinnahme.get(Calendar.YEAR) == calendarAktuell.get(Calendar.YEAR)) {
                 double betrag = einnahmen.getDouble(0);
                 einnahmenCounter += betrag;
             }
         }
-        restlicheTageDouble = (calendarAktuell.getActualMaximum(Calendar.DAY_OF_MONTH)
-                - calendarAktuell.get(Calendar.DAY_OF_MONTH));
+        restlicheTageDouble = ((calendarAktuell.getActualMaximum(Calendar.DAY_OF_MONTH)+1)
+                - (calendarAktuell.get(Calendar.DAY_OF_MONTH)+1));
         restlicheTage = (TextView) findViewById(R.id.textViewRestlicheTage);
         restlicheTage.setText("Restliche Tage: " + (int) restlicheTageDouble);
         restlichesGeldDouble = Math.round((verdienst - ausgabenCounter + einnahmenCounter) * 100.0) / 100.0;

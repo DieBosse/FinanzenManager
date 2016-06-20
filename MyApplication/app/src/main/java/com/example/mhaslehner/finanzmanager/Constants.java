@@ -5,7 +5,7 @@ package com.example.mhaslehner.finanzmanager;
  */
 public class Constants {
     public static final String DBNAME = "finanzen.db";
-    public static final int DBVERSION = 9;
+    public static final int DBVERSION = 10;
     public static final String TBLNAME_A = "ausgaben";
     public static final String TBLNAME_E = "einnahmen";
     public static final String TBLNAME_K = "kategorien";
