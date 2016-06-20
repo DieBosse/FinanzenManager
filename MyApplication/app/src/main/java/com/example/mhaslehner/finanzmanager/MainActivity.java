@@ -133,8 +133,12 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.verdienstmenu) {
             startActivity(new Intent(this, PreferenceActivity.class));
         }
-        if (id == R.id.menuactivitys) {
-            startActivity(new Intent(this, AktivitaetenAnzeigen.class));
+        if (id == R.id.einnahmenmenu) {
+            startActivity(new Intent(this, AktivitaetenAnzeigen.class).putExtra("einnahmeausgabe", 1));
+        }
+        if (id == R.id.ausgabenmenu)
+        {
+            startActivity(new Intent(this, AktivitaetenAnzeigen.class).putExtra("einnahmeausgabe", 2));
         }
         return super.onOptionsItemSelected(item);
     }

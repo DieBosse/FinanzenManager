@@ -76,7 +76,7 @@ public class AddAusgabe extends AppCompatActivity {
         int year = datePicker.getYear();
         int month = datePicker.getMonth();
         int day = datePicker.getDayOfMonth();
-        String datum = day + "." + month + "." + year;
+        String datum = day + "." + (month+1) + "." + year;
         String kategorie = "";
         int id = (int) spinnerKategorie.getSelectedItemId();
         Cursor cursor = finanzenDB.query(Constants.TBLNAME_K, new String[]{Constants.KATEGORIENAME},
