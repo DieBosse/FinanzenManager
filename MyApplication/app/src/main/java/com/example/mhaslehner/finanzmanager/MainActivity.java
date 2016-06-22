@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                 einnahmenCounter += betrag;
             }
         }
-        restlicheTageDouble = ((calendarAktuell.getActualMaximum(Calendar.DAY_OF_MONTH)+1)
+        restlicheTageDouble = ((calendarAktuell.getActualMaximum(Calendar.DAY_OF_MONTH))
                 - (calendarAktuell.get(Calendar.DAY_OF_MONTH)+1));
         restlicheTage = (TextView) findViewById(R.id.textViewRestlicheTage);
         restlicheTage.setText("Restliche Tage: " + (int) restlicheTageDouble);
