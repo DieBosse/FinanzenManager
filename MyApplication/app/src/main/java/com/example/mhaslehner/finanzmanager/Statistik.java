@@ -64,20 +64,23 @@ public class Statistik extends AppCompatActivity {
                 Constants.TBLNAME_K + " GROUP BY (" + Constants.KATEGORIENAME + ")", null);
         if (cursor.moveToFirst()) {
             kategorienVerbrauch.setText(cursor.getString(cursor.getColumnIndex(Constants.KATEGORIENAME)));
-
         }
+        cursor.close();
     }
 
-    private void getTeuersteKategorie()
-    {
+    private void getTeuersteKategorie() {
+
         Cursor cursor2 = finanzenDB.rawQuery("SELECT " + Constants.KATEGORIENAME +
-                ", MAX(" + Constants.BETRAG + ") FROM " +
-                Constants.TBLNAME_K + " GROUP BY (" + Constants.KATEGORIENAME + ")", null);
+                ", MAX(" + Constants.BETRAG + "), " + Constants.BETRAG + " FROM " +
+                Constants.TBLNAME_K, null);
+        Toast.makeText(getApplicationContext(),""+ cursor2.getColumnName(2),Toast.LENGTH_SHORT).show();
+
         if (cursor2.moveToFirst()) {
-            teuersteKategorie.setText((cursor2.getString(cursor2.getColumnIndex(Constants.KATEGORIENAME))
-                    +" ("+ (cursor2.getString(cursor2.getColumnIndex(Constants.BETRAG)))+")"));
+            teuersteKategorie.setText(cursor2.getString(cursor2.getColumnIndex(Constants.KATEGORIENAME))
+                    + " (" + cursor2.getString(cursor2.getColumnIndex(Constants.BETRAG)) + "€)");
 
         }
+        cursor2.close();
     }
 
     private void getMonthMoney() {
@@ -93,7 +96,7 @@ public class Statistik extends AppCompatActivity {
         Cursor cursor = finanzenDB.rawQuery("SELECT * FROM " + Constants.TBLNAME_A +
                 " WHERE " + Constants.DATUM + " BETWEEN '" + dateMin + "' AND '" + dateMax + "'", null);
         if (cursor.moveToFirst()) {
-            Toast.makeText(getApplicationContext(), "" + cursor.getCount(), Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getApplicationContext(), "" + cursor.getCount(), Toast.LENGTH_SHORT).show();
         }
     }
 

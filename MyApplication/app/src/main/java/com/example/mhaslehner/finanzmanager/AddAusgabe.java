@@ -76,7 +76,7 @@ public class AddAusgabe extends AppCompatActivity {
         int year = datePicker.getYear();
         int month = datePicker.getMonth();
         int day = datePicker.getDayOfMonth();
-        String datum = day + "." + (month+1) + "." + year;
+        String datum = day + "." + (month + 1) + "." + year;
         String kategorie = "";
         int id = (int) spinnerKategorie.getSelectedItemId();
         Cursor cursor = finanzenDB.query(Constants.TBLNAME_K, new String[]{Constants.KATEGORIENAME},
@@ -111,7 +111,7 @@ public class AddAusgabe extends AppCompatActivity {
                 c.close();
                 Cursor updateBetrag = finanzenDB.rawQuery("UPDATE " + Constants.TBLNAME_K +
                         " SET " + Constants.BETRAG +
-                        " = " + Constants.BETRAG + "+"+betrag+" WHERE " +
+                        " = " + Constants.BETRAG + " + " + betrag + " WHERE " +
                         Constants.KATEGORIENAME + " = '" + kategorie + "'", null);
                 updateBetrag.moveToFirst();
                 updateBetrag.close();
