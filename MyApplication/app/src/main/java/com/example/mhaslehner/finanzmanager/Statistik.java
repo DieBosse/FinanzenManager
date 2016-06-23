@@ -8,7 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -62,7 +65,7 @@ public class Statistik extends AppCompatActivity {
 
             }
         });
-        getMonthMoney();
+        getMonthMoney2();
         getKategorieCnt();
         getTeuersteKategorie();
     }
@@ -92,21 +95,43 @@ public class Statistik extends AppCompatActivity {
         cursor2.close();
     }
 
-    private void getMonthMoney() {
-        GregorianCalendar calendarAktuell = new GregorianCalendar();
-        Date aktuellesDatum = new Date();
-        calendarAktuell.setTime(aktuellesDatum);
-        int month = calendarAktuell.get(Calendar.MONTH) + 1;
-        int year = calendarAktuell.get(Calendar.YEAR);
-        int maxday = calendarAktuell.getActualMaximum(Calendar.DAY_OF_MONTH);
-        String dateMax = maxday + "." + month + "." + year;
-        String dateMin = 1 + "." + month + "." + year;
+    
 
-        Cursor cursor = finanzenDB.rawQuery("SELECT * FROM " + Constants.TBLNAME_A +
-                " WHERE " + Constants.DATUM + " BETWEEN '" + dateMin + "' AND '" + dateMax + "'", null);
-        if (cursor.moveToFirst()) {
-            // Toast.makeText(getApplicationContext(), "" + cursor.getCount(), Toast.LENGTH_SHORT).show();
+    private void getMonthMoney2()
+    {
+        double ausgabencounter=0.0;
+        GregorianCalendar calAktuell = new GregorianCalendar();
+        GregorianCalendar calAusgabe = new GregorianCalendar();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        Date date = new Date();
+        calAktuell.setTime(date); //aktuelles Datum im Kalender
+        Cursor c = finanzenDB.query(Constants.TBLNAME_A,new String[]{Constants.BETRAG,Constants.DATUM},null,null,null,null,null);
+        while (c.moveToNext())
+        {
+            Date d=null;
+            try {
+                d = sdf.parse(c.getString(c.getColumnIndex(Constants.DATUM)));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            if(d!=null)
+            {
+                calAusgabe.setTime(d);
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(),"Fehler bei Datumsumwandlung!",Toast.LENGTH_SHORT).show();
+            }
+
+            if(calAktuell.get(Calendar.MONTH) == calAusgabe.get(Calendar.MONTH) && calAktuell.get(Calendar.YEAR) == calAusgabe.get(Calendar.YEAR))
+            {
+                ausgabencounter+=c.getDouble(c.getColumnIndex(Constants.BETRAG));
+            }
+
         }
+
+        monatVerbrauch.setText(ausgabencounter+" €");
     }
 
 
