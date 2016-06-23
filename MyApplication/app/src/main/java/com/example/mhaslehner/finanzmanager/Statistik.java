@@ -57,17 +57,16 @@ public class Statistik extends AppCompatActivity {
             }
         });
 
-
-
-        getMonthMoney2();
         getKategorieCnt();
+        getMonthMoney2();
         getTeuersteKategorie();
     }
 
     private void getKategorieCnt() {
         Cursor cursor = finanzenDB.rawQuery("SELECT " + Constants.KATEGORIENAME +
                 ", MAX(" + Constants.KATEGORIE_AUSGABEN_CNT + "), " + Constants.KATEGORIE_AUSGABEN_CNT + " FROM " +
-                Constants.TBLNAME_K + " GROUP BY (" + Constants.KATEGORIENAME + ")", null);
+                Constants.TBLNAME_K, null);
+
         if (cursor.moveToFirst()) {
             kategorienVerbrauch.setText(cursor.getString(cursor.getColumnIndex(Constants.KATEGORIENAME))
                     + "\nAnzahl: " + cursor.getString(cursor.getColumnIndex(Constants.KATEGORIE_AUSGABEN_CNT)));
@@ -89,43 +88,36 @@ public class Statistik extends AppCompatActivity {
         cursor2.close();
     }
 
-    
 
-    private void getMonthMoney2()
-    {
-        double ausgabencounter=0.0;
+    private void getMonthMoney2() {
+        double ausgabencounter = 0.0;
         GregorianCalendar calAktuell = new GregorianCalendar();
         GregorianCalendar calAusgabe = new GregorianCalendar();
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         Date date = new Date();
         calAktuell.setTime(date); //aktuelles Datum im Kalender
-        Cursor c = finanzenDB.query(Constants.TBLNAME_A,new String[]{Constants.BETRAG,Constants.DATUM},null,null,null,null,null);
-        while (c.moveToNext())
-        {
-            Date d=null;
+        Cursor c = finanzenDB.query(Constants.TBLNAME_A, new String[]{Constants.BETRAG, Constants.DATUM}, null, null, null, null, null);
+        while (c.moveToNext()) {
+            Date d = null;
             try {
                 d = sdf.parse(c.getString(c.getColumnIndex(Constants.DATUM)));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
 
-            if(d!=null)
-            {
+            if (d != null) {
                 calAusgabe.setTime(d);
-            }
-            else
-            {
-                Toast.makeText(getApplicationContext(),"Fehler bei Datumsumwandlung!",Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Fehler bei Datumsumwandlung!", Toast.LENGTH_SHORT).show();
             }
 
-            if(calAktuell.get(Calendar.MONTH) == calAusgabe.get(Calendar.MONTH) && calAktuell.get(Calendar.YEAR) == calAusgabe.get(Calendar.YEAR))
-            {
-                ausgabencounter+=c.getDouble(c.getColumnIndex(Constants.BETRAG));
+            if (calAktuell.get(Calendar.MONTH) == calAusgabe.get(Calendar.MONTH) && calAktuell.get(Calendar.YEAR) == calAusgabe.get(Calendar.YEAR)) {
+                ausgabencounter += c.getDouble(c.getColumnIndex(Constants.BETRAG));
             }
 
         }
 
-        monatVerbrauch.setText(ausgabencounter+" €");
+        monatVerbrauch.setText(ausgabencounter + " €");
     }
 
 

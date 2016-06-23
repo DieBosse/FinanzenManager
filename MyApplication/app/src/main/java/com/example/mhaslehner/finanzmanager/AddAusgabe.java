@@ -116,6 +116,12 @@ public class AddAusgabe extends AppCompatActivity {
                 updateBetrag.moveToFirst();
                 updateBetrag.close();
 
+                Cursor updateMonth = finanzenDB.rawQuery("UPDATE " + Constants.TBLNAME_M +
+                        " SET " + Constants.BETRAG +
+                        " = " + Constants.BETRAG + " + " + betrag + " WHERE " +
+                        Constants._ID + " = '" + (month+1) + "'", null);
+                updateMonth.moveToFirst();
+                updateMonth.close();
                 Toast.makeText(getApplicationContext(), beschreibung +
                         " wurde erfolgreich zu Ausgaben hinzugefügt.", Toast.LENGTH_SHORT).show();
             }

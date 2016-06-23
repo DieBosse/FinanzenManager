@@ -5,10 +5,11 @@ package com.example.mhaslehner.finanzmanager;
  */
 public class Constants {
     public static final String DBNAME = "finanzen.db";
-    public static final int DBVERSION = 17;
+    public static final int DBVERSION = 24;
     public static final String TBLNAME_A = "ausgaben";
     public static final String TBLNAME_E = "einnahmen";
     public static final String TBLNAME_K = "kategorien";
+    public static final String TBLNAME_M = "monate";
 
 
     public static final String _ID = "_id";
@@ -37,6 +38,10 @@ public class Constants {
             KATEGORIENAME + " TEXT NOT NULL, " +
             BESCHREIBUNG + " TEXT, " +
             KATEGORIE_AUSGABEN_CNT + " INTEGER DEFAULT '0', " +
+            BETRAG + " DOUBLE DEFAULT '0');";
+
+    public static final String TBLSQL_M = "CREATE TABLE " + TBLNAME_M + " ( " + _ID +
+            " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             BETRAG + " DOUBLE DEFAULT '0');";
 
 

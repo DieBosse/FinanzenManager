@@ -18,6 +18,7 @@ public class DataBaseOpenHelperFinanzen extends SQLiteOpenHelper {
         db.execSQL(Constants.TBLSQL_K);
         db.execSQL(Constants.TBLSQL_E);
         db.execSQL(Constants.TBLSQL_A);
+        db.execSQL(Constants.TBLSQL_M);
     }
 
     @Override
@@ -26,6 +27,7 @@ public class DataBaseOpenHelperFinanzen extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Constants.TBLNAME_K);
         db.execSQL("DROP TABLE IF EXISTS " + Constants.TBLNAME_A);
         db.execSQL("DROP TABLE IF EXISTS " + Constants.TBLNAME_E);
+        db.execSQL("DROP TABLE IF EXISTS " + Constants.TBLNAME_M);
         onCreate(db);
     }
 
