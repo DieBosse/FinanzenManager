@@ -1,15 +1,13 @@
 package com.example.mhaslehner.finanzmanager;
 
 import android.animation.Animator;
-import android.app.Dialog;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
 /**
  * Created by HP on 09.06.2016.
  */
-public class PreferenceActivity extends android.preference.PreferenceActivity{
+public class PreferenceActivity extends android.preference.PreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

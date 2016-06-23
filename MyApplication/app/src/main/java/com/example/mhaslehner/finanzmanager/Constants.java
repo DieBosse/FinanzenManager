@@ -11,7 +11,6 @@ public class Constants {
     public static final String TBLNAME_K = "kategorien";
 
 
-
     public static final String _ID = "_id";
     public static final String BESCHREIBUNG = "beschreibung";
     public static final String BETRAG = "betrag";
