@@ -25,6 +25,7 @@ public class Statistik extends AppCompatActivity {
     private static TextView kategorienVerbrauch;
     private static TextView monatVerbrauch;
     private static TextView teuersteKategorie;
+    private static TextView actualWeekView;
     private static DataBaseOpenHelperFinanzen dataBaseOpenHelperFinanzen;
     private static SQLiteDatabase finanzenDB;
 
@@ -40,6 +41,7 @@ public class Statistik extends AppCompatActivity {
         kategorienVerbrauch = (TextView) findViewById(R.id.textViewStatistikKategorie);
         monatVerbrauch = (TextView) findViewById(R.id.textViewStatistikMonat);
         teuersteKategorie = (TextView) findViewById(R.id.textViewTeuersteKategorien);
+        actualWeekView = (TextView) findViewById(R.id.textViewActualWeek);
 
 
         kategorienall.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +64,7 @@ public class Statistik extends AppCompatActivity {
         getMonthMoney2();
         getKategorieCnt();
         getTeuersteKategorie();
+        getWeekMoney();
     }
 
     private void getKategorieCnt() {
@@ -125,8 +128,70 @@ public class Statistik extends AppCompatActivity {
 
         }
 
-        monatVerbrauch.setText(ausgabencounter+" €");
+        monatVerbrauch.setText(ausgabencounter + " €");
     }
 
+    private void getWeekMoney()
+    {
+        double[] weeks = new double[4];
+        double actualweek = 0;
+        GregorianCalendar calAktuell = new GregorianCalendar();
+        GregorianCalendar calAusgabe = new GregorianCalendar();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        Date date = new Date();
+        calAktuell.setTime(date); //aktuelles Datum im Kalender
+        Cursor c = finanzenDB.query(Constants.TBLNAME_A,new String[]{Constants.BETRAG,Constants.DATUM},null,null,null,null,null);
+        while (c.moveToNext())
+        {
+            Date d=null;
+            try {
+                d = sdf.parse(c.getString(c.getColumnIndex(Constants.DATUM)));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            if(d!=null)
+            {
+                calAusgabe.setTime(d);
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(),"Fehler bei Datumsumwandlung!",Toast.LENGTH_SHORT).show();
+            }
+
+            if(calAktuell.get(Calendar.MONTH) == calAusgabe.get(Calendar.MONTH) && calAktuell.get(Calendar.YEAR) == calAusgabe.get(Calendar.YEAR))
+            {
+                if(calAusgabe.get(Calendar.WEEK_OF_MONTH) == 1)
+                {
+                    weeks[0]+=c.getDouble(c.getColumnIndex(Constants.BETRAG));
+                }
+                if(calAusgabe.get(Calendar.WEEK_OF_MONTH) == 2)
+                {
+                    weeks[1]+=c.getDouble(c.getColumnIndex(Constants.BETRAG));
+                }
+                if(calAusgabe.get(Calendar.WEEK_OF_MONTH) == 3)
+                {
+                    weeks[2]+=c.getDouble(c.getColumnIndex(Constants.BETRAG));
+                }
+                if(calAusgabe.get(Calendar.WEEK_OF_MONTH) == 4)
+                {
+                    weeks[3]+=c.getDouble(c.getColumnIndex(Constants.BETRAG));
+                }
+                if(calAusgabe.get(Calendar.WEEK_OF_MONTH) == calAktuell.get(Calendar.WEEK_OF_MONTH))
+                {
+                    actualweek+= c.getDouble(c.getColumnIndex(Constants.BETRAG));
+                }
+
+            }
+
+
+
+
+        }
+
+        actualWeekView.setText(actualweek+" €");
+
+        //monatVerbrauch.setText(ausgabencounter+" €");
+    }
 
 }
