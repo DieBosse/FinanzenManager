@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -23,6 +22,7 @@ public class Statistik extends AppCompatActivity {
     private static TextView kategorienVerbrauch;
     private static TextView monatVerbrauch;
     private static TextView teuersteKategorie;
+    private static Button teuersteKategorieButton;
     private static DataBaseOpenHelperFinanzen dataBaseOpenHelperFinanzen;
     private static SQLiteDatabase finanzenDB;
 
@@ -38,6 +38,7 @@ public class Statistik extends AppCompatActivity {
         kategorienVerbrauch = (TextView) findViewById(R.id.textViewStatistikKategorie);
         monatVerbrauch = (TextView) findViewById(R.id.textViewStatistikMonat);
         teuersteKategorie = (TextView) findViewById(R.id.textViewTeuersteKategorien);
+        teuersteKategorieButton = (Button) findViewById(R.id.buttonTeuersteKategorien);
 
         kategorienall.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +54,14 @@ public class Statistik extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), StatistikAll.class).putExtra("button", 2));
             }
         });
+
+        teuersteKategorieButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), StatistikAll.class).putExtra("button", 3));
+
+            }
+        });
         getMonthMoney();
         getKategorieCnt();
         getTeuersteKategorie();
@@ -60,10 +69,11 @@ public class Statistik extends AppCompatActivity {
 
     private void getKategorieCnt() {
         Cursor cursor = finanzenDB.rawQuery("SELECT " + Constants.KATEGORIENAME +
-                ", MAX(" + Constants.KATEGORIE_AUSGABEN_CNT + ") FROM " +
+                ", MAX(" + Constants.KATEGORIE_AUSGABEN_CNT + "), " + Constants.KATEGORIE_AUSGABEN_CNT + " FROM " +
                 Constants.TBLNAME_K + " GROUP BY (" + Constants.KATEGORIENAME + ")", null);
         if (cursor.moveToFirst()) {
-            kategorienVerbrauch.setText(cursor.getString(cursor.getColumnIndex(Constants.KATEGORIENAME)));
+            kategorienVerbrauch.setText(cursor.getString(cursor.getColumnIndex(Constants.KATEGORIENAME))
+                    + "\nAnzahl: " + cursor.getString(cursor.getColumnIndex(Constants.KATEGORIE_AUSGABEN_CNT)));
         }
         cursor.close();
     }
@@ -73,11 +83,10 @@ public class Statistik extends AppCompatActivity {
         Cursor cursor2 = finanzenDB.rawQuery("SELECT " + Constants.KATEGORIENAME +
                 ", MAX(" + Constants.BETRAG + "), " + Constants.BETRAG + " FROM " +
                 Constants.TBLNAME_K, null);
-        Toast.makeText(getApplicationContext(),""+ cursor2.getColumnName(2),Toast.LENGTH_SHORT).show();
 
         if (cursor2.moveToFirst()) {
             teuersteKategorie.setText(cursor2.getString(cursor2.getColumnIndex(Constants.KATEGORIENAME))
-                    + " (" + cursor2.getString(cursor2.getColumnIndex(Constants.BETRAG)) + "€)");
+                    + " (" + cursor2.getString(cursor2.getColumnIndex(Constants.BETRAG)) + "â‚¬)");
 
         }
         cursor2.close();
@@ -96,7 +105,7 @@ public class Statistik extends AppCompatActivity {
         Cursor cursor = finanzenDB.rawQuery("SELECT * FROM " + Constants.TBLNAME_A +
                 " WHERE " + Constants.DATUM + " BETWEEN '" + dateMin + "' AND '" + dateMax + "'", null);
         if (cursor.moveToFirst()) {
-           // Toast.makeText(getApplicationContext(), "" + cursor.getCount(), Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), "" + cursor.getCount(), Toast.LENGTH_SHORT).show();
         }
     }
 

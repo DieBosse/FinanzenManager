@@ -27,12 +27,24 @@ public class StatistikAll extends AppCompatActivity {
         int zahl = getIntent().getIntExtra("button", -1);
         if (zahl == 1) {
             showKategories();
-        } else {
-            if (zahl == 2) {
-                showMonths();
-            }
+
+        }
+        if (zahl == 2) {
+            showMonths();
+        }
+        if (zahl == 3) {
+            showKategorieGeld();
         }
 
+
+    }
+
+    private void showKategorieGeld() {
+        Cursor cursor = finanzenDB.rawQuery("SELECT * FROM " + Constants.TBLNAME_K, null);
+
+        if (cursor.moveToFirst()) {
+            setAdapterGeld(cursor);
+        }
     }
 
     private void showMonths() {
@@ -65,6 +77,17 @@ public class StatistikAll extends AppCompatActivity {
 
     private void setAdapterMonths(Cursor cursor) {
         final String[] COLUMS_TO_BE_BOUND = new String[]{Constants.KATEGORIENAME, Constants.KATEGORIE_AUSGABEN_CNT};
+        final int[] ITEMS_TO_BE_FILLED = new int[]{android.R.id.text1, android.R.id.text2};
+        final SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
+                android.R.layout.two_line_list_item,
+                cursor,
+                COLUMS_TO_BE_BOUND,
+                ITEMS_TO_BE_FILLED, 0);
+        listView.setAdapter(adapter);
+    }
+
+    private void setAdapterGeld(Cursor cursor) {
+        final String[] COLUMS_TO_BE_BOUND = new String[]{Constants.KATEGORIENAME, Constants.BETRAG};
         final int[] ITEMS_TO_BE_FILLED = new int[]{android.R.id.text1, android.R.id.text2};
         final SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
                 android.R.layout.two_line_list_item,
