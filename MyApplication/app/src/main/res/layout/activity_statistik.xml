@@ -32,11 +32,6 @@
 
         </LinearLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Alle Kategorien"
-            android:id="@+id/buttonStatistikAlleKategorien" />
     </LinearLayout>
 
     <LinearLayout
@@ -69,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Alle Kategorien"
-            android:id="@+id/buttonTeuersteKategorien" />
+            android:id="@+id/buttonAllKategorien" />
     </LinearLayout>
 
     <LinearLayout

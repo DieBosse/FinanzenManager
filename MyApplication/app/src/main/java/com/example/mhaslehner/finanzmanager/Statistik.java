@@ -22,7 +22,6 @@ public class Statistik extends AppCompatActivity {
     private static TextView kategorienVerbrauch;
     private static TextView monatVerbrauch;
     private static TextView teuersteKategorie;
-    private static Button teuersteKategorieButton;
     private static DataBaseOpenHelperFinanzen dataBaseOpenHelperFinanzen;
     private static SQLiteDatabase finanzenDB;
 
@@ -33,12 +32,12 @@ public class Statistik extends AppCompatActivity {
 
         dataBaseOpenHelperFinanzen = new DataBaseOpenHelperFinanzen(this);
         finanzenDB = dataBaseOpenHelperFinanzen.getWritableDatabase();
-        kategorienall = (Button) findViewById(R.id.buttonStatistikAlleKategorien);
+        kategorienall = (Button) findViewById(R.id.buttonAllKategorien);
         monateall = (Button) findViewById(R.id.buttonStatistikAlleMonate);
         kategorienVerbrauch = (TextView) findViewById(R.id.textViewStatistikKategorie);
         monatVerbrauch = (TextView) findViewById(R.id.textViewStatistikMonat);
         teuersteKategorie = (TextView) findViewById(R.id.textViewTeuersteKategorien);
-        teuersteKategorieButton = (Button) findViewById(R.id.buttonTeuersteKategorien);
+
 
         kategorienall.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,13 +54,7 @@ public class Statistik extends AppCompatActivity {
             }
         });
 
-        teuersteKategorieButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), StatistikAll.class).putExtra("button", 3));
 
-            }
-        });
         getMonthMoney();
         getKategorieCnt();
         getTeuersteKategorie();
