@@ -22,6 +22,7 @@ public class Statistik extends AppCompatActivity {
     private static Button monateall;
     private static TextView kategorienVerbrauch;
     private static TextView monatVerbrauch;
+    private static TextView teuersteKategorie;
     private static DataBaseOpenHelperFinanzen dataBaseOpenHelperFinanzen;
     private static SQLiteDatabase finanzenDB;
 
@@ -36,6 +37,7 @@ public class Statistik extends AppCompatActivity {
         monateall = (Button) findViewById(R.id.buttonStatistikAlleMonate);
         kategorienVerbrauch = (TextView) findViewById(R.id.textViewStatistikKategorie);
         monatVerbrauch = (TextView) findViewById(R.id.textViewStatistikMonat);
+        teuersteKategorie = (TextView) findViewById(R.id.textViewTeuersteKategorien);
 
         kategorienall.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +55,7 @@ public class Statistik extends AppCompatActivity {
         });
         getMonthMoney();
         getKategorieCnt();
+        getTeuersteKategorie();
     }
 
     private void getKategorieCnt() {
@@ -61,6 +64,18 @@ public class Statistik extends AppCompatActivity {
                 Constants.TBLNAME_K + " GROUP BY (" + Constants.KATEGORIENAME + ")", null);
         if (cursor.moveToFirst()) {
             kategorienVerbrauch.setText(cursor.getString(cursor.getColumnIndex(Constants.KATEGORIENAME)));
+
+        }
+    }
+
+    private void getTeuersteKategorie()
+    {
+        Cursor cursor2 = finanzenDB.rawQuery("SELECT " + Constants.KATEGORIENAME +
+                ", MAX(" + Constants.BETRAG + ") FROM " +
+                Constants.TBLNAME_K + " GROUP BY (" + Constants.KATEGORIENAME + ")", null);
+        if (cursor2.moveToFirst()) {
+            teuersteKategorie.setText((cursor2.getString(cursor2.getColumnIndex(Constants.KATEGORIENAME))
+                    +" ("+ (cursor2.getString(cursor2.getColumnIndex(Constants.BETRAG)))+")"));
 
         }
     }
@@ -81,4 +96,6 @@ public class Statistik extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "" + cursor.getCount(), Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }

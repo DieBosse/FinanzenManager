@@ -109,6 +109,13 @@ public class AddAusgabe extends AppCompatActivity {
                         Constants.KATEGORIENAME + " = '" + kategorie + "'", null);
                 c.moveToFirst();
                 c.close();
+                Cursor updateBetrag = finanzenDB.rawQuery("UPDATE " + Constants.TBLNAME_K +
+                        " SET " + Constants.BETRAG +
+                        " = " + Constants.BETRAG + "+"+betrag+" WHERE " +
+                        Constants.KATEGORIENAME + " = '" + kategorie + "'", null);
+                updateBetrag.moveToFirst();
+                updateBetrag.close();
+
                 Toast.makeText(getApplicationContext(), beschreibung +
                         " wurde erfolgreich zu Ausgaben hinzugefügt.", Toast.LENGTH_SHORT).show();
             }
