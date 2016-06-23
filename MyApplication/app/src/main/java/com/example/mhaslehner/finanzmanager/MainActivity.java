@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
            long ins =  finanzenDB.insert(Constants.TBLNAME_M, null, contentValues);
             if (ins < 1)
             {
-                Toast.makeText(getApplicationContext(),""+ins,Toast.LENGTH_SHORT).show();
                 return;
             }
         }
@@ -156,6 +156,11 @@ public class MainActivity extends AppCompatActivity {
         }
         if (id == R.id.ausgabenmenu) {
             startActivity(new Intent(this, AktivitaetenAnzeigen.class).putExtra("einnahmeausgabe", 2));
+        }
+        if (id == R.id.resetmenu)
+        {
+            Constants.DBVERSION +=1;
+            startActivity(new Intent(this, MainActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
