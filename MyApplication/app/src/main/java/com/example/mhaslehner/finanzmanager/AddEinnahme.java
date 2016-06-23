@@ -52,7 +52,7 @@ public class AddEinnahme extends AppCompatActivity {
         int year = datePicker.getYear();
         int month = datePicker.getMonth();
         int day = datePicker.getDayOfMonth();
-        String datum = day + "." + (month+1) + "." + year;
+        String datum = day + "." + (month + 1) + "." + year;
 
         ContentValues values = new ContentValues();
         values.put("beschreibung", beschreibung);
