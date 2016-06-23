@@ -1,5 +1,6 @@
 package com.example.mhaslehner.finanzmanager;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -56,7 +57,26 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        insertMonths();
+
     }
+
+    private void insertMonths() {
+
+        for (int i = 0; i < 12; i++) {
+
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(Constants._ID,i+1);
+            contentValues.put(Constants.BETRAG, 0.0);
+           long ins =  finanzenDB.insert(Constants.TBLNAME_M, null, contentValues);
+            if (ins < 1)
+            {
+                Toast.makeText(getApplicationContext(),""+ins,Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+    }
+
 
     private void setSmiley() {
         String prefsString = prefs.getString("verdienst", "");

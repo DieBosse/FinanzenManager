@@ -7,6 +7,8 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
+import java.util.Calendar;
+
 /**
  * Created by HP on 22.06.2016.
  */
@@ -45,7 +47,7 @@ public class StatistikAll extends AppCompatActivity {
     }
 
     private void showMonths() {
-        Cursor cursor = finanzenDB.rawQuery("SELECT * FROM " + Constants.TBLNAME_A, null);
+        Cursor cursor = finanzenDB.rawQuery("SELECT * FROM " + Constants.TBLNAME_M, null);
 
         if (cursor.moveToFirst()) {
             setAdapterMonths(cursor);
@@ -54,10 +56,10 @@ public class StatistikAll extends AppCompatActivity {
 
 
     private void setAdapterMonths(Cursor cursor) {
-        final String[] COLUMS_TO_BE_BOUND = new String[]{Constants.KATEGORIENAME, Constants.KATEGORIE_AUSGABEN_CNT};
-        final int[] ITEMS_TO_BE_FILLED = new int[]{android.R.id.text1, android.R.id.text2};
+        final String[] COLUMS_TO_BE_BOUND = new String[]{Constants._ID, Constants.BETRAG};
+        final int[] ITEMS_TO_BE_FILLED = new int[]{R.id.textViewMonateall, R.id.textViewBetragMonateAll};
         final SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-                android.R.layout.two_line_list_item,
+                R.layout.monate_all,
                 cursor,
                 COLUMS_TO_BE_BOUND,
                 ITEMS_TO_BE_FILLED, 0);
