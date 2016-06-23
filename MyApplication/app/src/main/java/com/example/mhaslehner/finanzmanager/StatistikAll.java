@@ -1,10 +1,12 @@
 package com.example.mhaslehner.finanzmanager;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.Calendar;
@@ -27,6 +29,7 @@ public class StatistikAll extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listViewStatistik);
 
         int zahl = getIntent().getIntExtra("button", -1);
+        double[] weeks = getIntent().getDoubleArrayExtra("array");
         if (zahl == 1) {
             showKategories();
 
@@ -36,7 +39,10 @@ public class StatistikAll extends AppCompatActivity {
         }
 
 
+
     }
+
+
 
     private void showKategories() {
         Cursor cursor = finanzenDB.rawQuery("SELECT * FROM " + Constants.TBLNAME_K, null);
@@ -76,5 +82,7 @@ public class StatistikAll extends AppCompatActivity {
                 ITEMS_TO_BE_FILLED, 0);
         listView.setAdapter(adapter);
     }
+
+
 
 }

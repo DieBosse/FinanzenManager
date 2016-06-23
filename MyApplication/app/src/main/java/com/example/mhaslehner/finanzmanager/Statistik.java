@@ -22,12 +22,14 @@ import java.util.GregorianCalendar;
 public class Statistik extends AppCompatActivity {
     private static Button kategorienall;
     private static Button monateall;
+    private static Button weeksall;
     private static TextView kategorienVerbrauch;
     private static TextView monatVerbrauch;
     private static TextView teuersteKategorie;
     private static TextView actualWeekView;
     private static DataBaseOpenHelperFinanzen dataBaseOpenHelperFinanzen;
     private static SQLiteDatabase finanzenDB;
+    double[] weeks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class Statistik extends AppCompatActivity {
         monatVerbrauch = (TextView) findViewById(R.id.textViewStatistikMonat);
         teuersteKategorie = (TextView) findViewById(R.id.textViewTeuersteKategorien);
         actualWeekView = (TextView) findViewById(R.id.textViewActualWeek);
+        weeksall = (Button) findViewById(R.id.buttonWeek);
 
 
         kategorienall.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +59,13 @@ public class Statistik extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), StatistikAll.class).putExtra("button", 2));
+            }
+        });
+
+        weeksall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), StatistikWeeks.class).putExtra("button", 3).putExtra("array", weeks));
             }
         });
 
@@ -125,7 +135,7 @@ public class Statistik extends AppCompatActivity {
 
     private void getWeekMoney()
     {
-        double[] weeks = new double[4];
+        weeks = new double[4];
         double actualweek = 0;
         GregorianCalendar calAktuell = new GregorianCalendar();
         GregorianCalendar calAusgabe = new GregorianCalendar();
